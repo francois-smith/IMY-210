@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE note SYSTEM "TA.dtd">
+<!DOCTYPE meal SYSTEM "TA.dtd">
 <meal>
 	<!-- the <meal> element can hold multiple <breakfast>, <lunch> and <dinner> element in no specfic order-->
 	<!-- <meal> element can also be completely empty-->
