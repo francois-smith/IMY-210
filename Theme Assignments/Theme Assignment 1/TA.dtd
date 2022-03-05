@@ -1,0 +1,9 @@
+<!ELEMENT meal ((breakfast,lunch,dinner,dessert) | (breakfast,lunch,dessert,dinner) | (breakfast,dinner,lunch,dessert) | (breakfast,dinner,dessert,lunch) | 
+                (breakfast,dessert,lunch,dinner) | (breakfast,dessert,dinner,lunch) | (lunch,breakfast,dinner,dessert) | (lunch,breakfast,dessert,dinner) | 
+                (lunch,dinner,breakfast,dessert) | (lunch,dinner,dessert,breakfast) | (lunch,dessert,breakfast,dinner) | (lunch,dessert,dinner,breakfast) | 
+                (dinner,breakfast,lunch,dessert) | (dinner,breakfast,dessert,lunch) | (dinner,lunch,breakfast,dessert) | (dinner,lunch,dessert,breakfast) | 
+                (dinner,dessert,breakfast,lunch) | (dinner,dessert,lunch,breakfast) | (dessert,breakfast,lunch,dinner) | (dessert,breakfast,dinner,lunch) | 
+                (dessert,lunch,breakfast,dinner) | (dessert,lunch,dinner,breakfast) | (dessert,lunch,breakfast,lunch)  | (dessert,dinner,lunch,breakfast) )
+>
+
+<!ELEMENT breakfast (#PCDATA)>
