@@ -1,3 +1,4 @@
+<!--u21649988 Francois Smith-->
 <template>
     <div>
         <button @click="like">

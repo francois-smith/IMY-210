@@ -73,5 +73,6 @@ export default {
 		width: 100%;
 		text-align: center;
 		border: 3px #333 solid;
+		background-color: #fff;
 	}
 </style>

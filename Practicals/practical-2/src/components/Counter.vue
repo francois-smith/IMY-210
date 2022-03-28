@@ -1,3 +1,4 @@
+<!--u21649988 Francois Smith-->
 <template>
     <div>
         <h1 v-bind:class="{liked: isActive}">{{value}}</h1>
