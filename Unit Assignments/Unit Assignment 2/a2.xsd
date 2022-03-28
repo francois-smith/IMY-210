@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+</xs:schema>
+
+<!--
+    Some additional things to keep note of:
+    o All elements must appear exactly once, unless otherwise specified.
+    o Create different named custom simple and complex types, as necessary.
+    o Need to use occurrences in more than one place.
+    o Need to implement both a restriction and extension of data ty
+-->

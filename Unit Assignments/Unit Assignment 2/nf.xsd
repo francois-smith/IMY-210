@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="book">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="section" type="sectionType"/>
+                <xs:element name="section" type="sectionType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="sectionType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="title" minOccurs="1" type="maxChar"/>
+                    <xs:element name="authors" type="authorType"/>
+                    <xs:element name="publisher" minOccurs="1" type="publisherType"/>
+                </xs:sequence>  
+                <xs:sequence>
+                    <xs:element name="isbn"/>
+                    <xs:element name="notes"/>
+                    <xs:element name="format"/>
+                    <xs:element name="edition"/>
+                    <xs:element name="subjects"/>
+                </xs:sequence>
+            </xs:choice>   
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="authorType">
+        <xs:sequence>
+            <xs:element name="author" type="maxChar" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="publisherType">  
+        <xs:simpleContent>
+            <xs:extension base="maxChar">
+                <xs:attribute name="year" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="maxChar">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+
+<!--
+    Some additional things to keep note of:
+    o All elements must appear exactly once, unless otherwise specified.
+    o Create different named custom simple and complex types, as necessary.
+    o Need to use occurrences in more than one place.
+    o Need to implement both a restriction and extension of data ty
+-->
