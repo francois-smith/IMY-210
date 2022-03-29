@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!--Francois Smith u21649988-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="https://realbooks.cn/ns/1.0/f" targetNamespace="https://realbooks.cn/ns/1.0/f">
     <xs:element name="book">
         <xs:complexType>
             <xs:all>
@@ -10,16 +11,11 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- One of three formats all in sequence-->
-			<!-- Format A: title, authors, publisher-->
-			<!-- Format B: infinite amount of ratings-->
-			<!-- Format C: description, genres, summary-->
-
     <xs:complexType name="sectionType">
         <xs:choice>
             <xs:sequence>
-                <xs:element name="title" type="maxChar" minOccurs="1"/>
-                <xs:element name="authors" type="authorType"/>
+                <xs:element name="title" maxOccurs="1" type="maxChar" minOccurs="1"/>
+                <xs:element name="authors" type="authorType" minOccurs="1"/>
                 <xs:element name="publisher" minOccurs="1" type="publisherType"/>
             </xs:sequence>  
             <xs:sequence>
@@ -89,11 +85,3 @@
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
-
-<!--
-    Some additional things to keep note of:
-    o All elements must appear exactly once, unless otherwise specified.
-    o Create different named custom simple and complex types, as necessary.
-    o Need to use occurrences in more than one place.
-    o Need to implement both a restriction and extension of data ty
--->

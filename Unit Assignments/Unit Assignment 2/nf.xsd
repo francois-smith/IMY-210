@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!--Francois Smith u21649988-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="https://realbooks.cn/ns/1.0/nf" targetNamespace="https://realbooks.cn/ns/1.0/nf">
     <xs:element name="book">
         <xs:complexType>
             <xs:sequence>
@@ -18,27 +19,36 @@
                     <xs:element name="publisher" minOccurs="1" type="publisherType"/>
                 </xs:sequence>  
                 <xs:sequence>
-                    <xs:choice>
-                        <xs:sequence>
-                            <xs:element name="isbn" type="xs:string"/>
-                        </xs:sequence>
-                        <xs:sequence>
-                            <xs:element name="isbn"  maxOccurs="3"/>
-                        </xs:sequence>
-                    </xs:choice>
+                    <xs:element name="isbn" type="isbnType" minOccurs="1"/>
                     <xs:element name="notes" type="xs:string" minOccurs="1"/>
-                    <xs:element name="format" minOccurs="1"/>
-                    <xs:element name="edition" minOccurs="1"/>
-                    <xs:element name="subjects" minOccurs="1"/>
+                    <xs:element name="format" type="maxChar" minOccurs="1"/>
+                    <xs:element name="edition" type="maxVal" minOccurs="1"/>
+                    <xs:element name="subjects" type="subjectsType" minOccurs="1"/>
                 </xs:sequence>
             </xs:choice>   
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="isbnType" mixed="true">
+        <xs:choice>
+            <xs:sequence>
+
+            </xs:sequence>
+            <xs:sequence>
+                <xs:element name="isbn" type="isbnAtrr" maxOccurs="3"/>
+            </xs:sequence>
+        </xs:choice>
+    </xs:complexType>
 
     <xs:complexType name="authorType">
         <xs:sequence>
             <xs:element name="author" type="maxChar" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="subjectsType">
+        <xs:sequence>
+            <xs:element name="subject" type="maxChar" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -50,38 +60,31 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="maxVal">
+        <xs:restriction base="xs:integer">
+            <xs:maxInclusive value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="maxChar">
         <xs:restriction base="xs:string">
             <xs:maxLength value="255"/>
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="simpleText">
-        <xs:restriction base="xs:string"/>
+    <xs:simpleType name="isbn10">
+        <xs:restriction base="xs:string">
+            <xs:length value="10" />
+        </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="string_10">
-
-    <xs:restriction base="xs:string">
-        <xs:length value="10" />
-    </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="string_13">
+    <xs:simpleType name="isbn13">
         <xs:restriction base="xs:string">
             <xs:length value="13" />
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="string_10_13">
-        <xs:union memberTypes="string_10 string_13"/>
+    <xs:simpleType name="isbnAtrr">
+        <xs:union memberTypes="isbn10 isbn13"/>
     </xs:simpleType> 
 </xs:schema>
-
-<!--
-    Some additional things to keep note of:
-    o All elements must appear exactly once, unless otherwise specified.
-    o Create different named custom simple and complex types, as necessary.
-    o Need to use occurrences in more than one place.
-    o Need to implement both a restriction and extension of data ty
--->

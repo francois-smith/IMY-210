@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <books
 	xmlns:f="https://realbooks.cn/ns/1.0/f" 
-	xmlns:nf="https://realbooks.cn/ns/1.0/nf">
+	xmlns:nf="https://realbooks.cn/ns/1.0/nf"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="a2.xsd">
 	<!-- <books> can contain a unlimited list of object from both namespaces, it can also be empty-->
-	<nf:book>
+	<nf:book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://realbooks.cn/ns/1.0/nf nf.xsd" xmlns:nf="https://realbooks.cn/ns/1.0/nf">
 		<section>
 			<title>Interaction design : beyond human-computer interaction</title>
 			<authors>	
@@ -28,7 +30,7 @@
 			</subjects>
 		</section>
 	</nf:book>
-	<f:book>
+	<f:book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://realbooks.cn/ns/1.0/f f.xsd" xmlns:f="https://realbooks.cn/ns/1.0/f">
 		<section>
 			<title>Dressed to kill</title>
 			<authors>

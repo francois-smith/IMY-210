@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nf.xsd">
+<nf:book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://realbooks.cn/ns/1.0/nf nf.xsd" xmlns:nf="https://realbooks.cn/ns/1.0/nf">
 	<!-- <book> can contain only two <section> element-->
 	<section>
 		<!-- <section> can follow one of two formats -->
@@ -24,7 +23,6 @@
 				<!-- <isbn> text can either be 10 or 13 characters-->
 			<isbn>9781119547259</isbn>
 			<isbn>9781119547259</isbn>
-			<isbn></isbn>
 		</isbn>
 		<notes>
 			<!-- plain text with no limitation on characters-->
@@ -40,4 +38,4 @@
 				<!-- plain test, no longer than 255 character--> 
 		</subjects>
 	</section>
-</book>
+</nf:book>
