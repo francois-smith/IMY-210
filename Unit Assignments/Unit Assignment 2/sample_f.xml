@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<book>
+<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="f.xsd">
 	<!-- <book> can contain up to three <section> element, all are optional-->
 	<section>
 		<!-- One of three formats all in sequence-->
@@ -19,13 +19,13 @@
 				<!-- @year is a numeric value between 1900 - 2100-->
 	</section>
 	<section>
-	<!-- contain infinite <rating> -->
-
-		<rating source ="goodread">5</rating>
-			<!-- numeric value, no larger than 10 -->
-			<!-- @source is required and holds plain test, no longer than 50 character--> 
-		<rating source ="imdb">4</rating>
-		<rating source ="editor">3</rating>
+		<!-- contain infinite <rating> -->
+	
+			<rating source ="goodread">5</rating>
+				<!-- numeric value, no larger than 10 -->
+				<!-- @source is required and holds plain test, no longer than 50 character--> 
+			<rating source ="imdb">4</rating>
+			<rating source ="editor">3</rating>
 	</section>
 	<section>
 		<description>
@@ -51,4 +51,5 @@
 				glamorous as well as brave, and beating the men at their own game. Only a tiny percentage of people can multi-task to the extreme level the aircraft demands, and most airmen who try to qualify as an Apache pilot fail. Full of the exciting, adrenaline-filled action that has made other military memoirs so successful, Bird is also unique. A highly intelligent and brilliant young woman, Charlotte is Britain's first female Apache pilot, and the first British female pilot to kill in an Apache. We have, quite simply, never seen the landscape of 21st-century frontline conflict from a perspective like hers before. Bird will appeal to anyone interested in current affairs, but it will also speak to a whole generation of young women who will relate to 27-year-old Charlotte in a way they never imagined possible.
 		</summary>
 	</section>
+	
 </book>

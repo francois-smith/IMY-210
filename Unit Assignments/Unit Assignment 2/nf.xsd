@@ -18,15 +18,23 @@
                     <xs:element name="publisher" minOccurs="1" type="publisherType"/>
                 </xs:sequence>  
                 <xs:sequence>
-                    <xs:element name="isbn"/>
-                    <xs:element name="notes"/>
-                    <xs:element name="format"/>
-                    <xs:element name="edition"/>
-                    <xs:element name="subjects"/>
+                    <xs:choice>
+                        <xs:sequence>
+                            <xs:element name="isbn" type="xs:string"/>
+                        </xs:sequence>
+                        <xs:sequence>
+                            <xs:element name="isbn"  maxOccurs="3"/>
+                        </xs:sequence>
+                    </xs:choice>
+                    <xs:element name="notes" type="xs:string" minOccurs="1"/>
+                    <xs:element name="format" minOccurs="1"/>
+                    <xs:element name="edition" minOccurs="1"/>
+                    <xs:element name="subjects" minOccurs="1"/>
                 </xs:sequence>
             </xs:choice>   
         </xs:sequence>
     </xs:complexType>
+
 
     <xs:complexType name="authorType">
         <xs:sequence>
@@ -47,6 +55,27 @@
             <xs:maxLength value="255"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:simpleType name="simpleText">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="string_10">
+
+    <xs:restriction base="xs:string">
+        <xs:length value="10" />
+    </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="string_13">
+        <xs:restriction base="xs:string">
+            <xs:length value="13" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="string_10_13">
+        <xs:union memberTypes="string_10 string_13"/>
+    </xs:simpleType> 
 </xs:schema>
 
 <!--

@@ -23,6 +23,8 @@
 			<isbn>1119547253</isbn>
 				<!-- <isbn> text can either be 10 or 13 characters-->
 			<isbn>9781119547259</isbn>
+			<isbn>9781119547259</isbn>
+			<isbn></isbn>
 		</isbn>
 		<notes>
 			<!-- plain text with no limitation on characters-->
