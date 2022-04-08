@@ -5,7 +5,9 @@
         <html>
             <body>
                 <b>Available Books</b><br/>
-                <xsl:apply-templates select="up/library[@name='merensky']/book"/>
+                <xsl:apply-templates select="up/library[@name='merensky']/book">
+                    <xsl:sort select="@isbn" order="ascending" data-type="number"/>
+                </xsl:apply-templates>
                 <br/>
                 <xsl:variable name="availBooks" select="up/library/book[not(@status='out')]"/>
                 <i>Total books available: <xsl:value-of select="count($availBooks)"/></i><br/>
