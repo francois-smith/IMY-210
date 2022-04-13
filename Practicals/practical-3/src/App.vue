@@ -1,26 +1,51 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+        <TaskAddBar/>
+	    <TaskHolder/>
+    </div> 
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TaskHolder from './components/TaskHolder.vue'
+import TaskAddBar from './components/TaskAddBar.vue'
+import TaskItem from './components/TaskItem.vue'
+import TaskCategory from './components/TaskCategory.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+	name: 'App',
+	components: {
+		TaskHolder,
+        TaskAddBar,
+        TaskItem,
+        TaskCategory
+    }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap');
+    :root{
+        --font-color: #292929;
+        --background-color: #F9F9F9;
+        --accent-color: #4483F7;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+        position: absolute;
+    }
+    
+    body {
+        min-height: 100vh;
+        color: var(--font-color);
+        background-color: var(--background-color);
+        font-family: 'Montserrat', sans-serif;
+        min-width: 100vw;
+    }
 </style>
