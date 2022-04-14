@@ -1,3 +1,4 @@
+/*Francois Smith u21649988*/
 <template>
     <div ref="currentTask" class="task">
         <textarea ref="taskName" :value=task.details class="task-name" disabled="disabled"/>

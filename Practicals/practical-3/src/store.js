@@ -1,6 +1,7 @@
 import {taskData} from "./data.js"
 import {reactive} from 'vue';
 
+/*Francois Smith u21649988*/
 export const store = {
     state: {
         data: reactive(taskData),

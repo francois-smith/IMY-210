@@ -1,3 +1,4 @@
+/*Francois Smith u21649988*/
 <template>
     <div class="category-container">
         <TaskCategory v-for="category in shareData.data" :key="category.id" :category="category"/>

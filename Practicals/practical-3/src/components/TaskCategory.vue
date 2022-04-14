@@ -1,3 +1,5 @@
+/*Francois Smith u21649988*/
+/*Changed clicking on category itself to a button called set active as it felt more natural to me*/
 <template>
     <div class="task-category">
         <div class="category-header">

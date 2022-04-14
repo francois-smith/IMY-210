@@ -1,3 +1,4 @@
+/*Francois Smith u21649988*/
 <template>
     <div class="top-bar-container">
         <div id="active-container">
