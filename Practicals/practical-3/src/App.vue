@@ -33,8 +33,8 @@ export default {
     
     body {
         min-height: 100vh;
-        color: #292929;
-        background-color: #F9F9F9;
+        color: rgb(250, 237, 237);
+        background-color: #242424;
         font-family: 'Montserrat', sans-serif;
         min-width: 100vw;
     }

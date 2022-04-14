@@ -1,17 +1,46 @@
 <template>
     <div class="top-bar-container">
-        <input id="element-to-add" type="text">
+        <div id="active-container">
+            <div>Currently Adding To</div>
+            <div class="active-text">{{getActive.title}} Tasks</div>
+        </div>
+        <input placeholder="Please Enter Value" id="element-to-add" type="text" v-model="newInput">
         <div>
-            <button>+ Add Task</button>
-        <button>+ Add Category</button>
+            <button @click="addTask(newInput)">+ Add Task</button>
+            <button @click="addCategory(newInput)">+ Add Category</button>
         </div>
     </div>
 </template>
 
 <script>
+import { store } from '../store.js'
+
 export default {
     name: 'TaskAddBar',
-
+    methods:{
+        addTask(newInput){
+            if(newInput != ""){
+                store.addTask(newInput);
+                this.newInput = "";
+            }
+        },
+        addCategory(newInput){
+            if(newInput != ""){
+                store.addCategory(newInput);
+                this.newInput = "";
+            }
+        }
+    },
+    computed:{
+        getActive(){
+            return store.getActiveCategory();
+        }
+    },
+    data(){
+        return {
+            newInput: "",
+        }
+    }
 }
 </script>
 
@@ -26,12 +55,12 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #F9F9F9;
+        background-color: #242424;
     }
 
     button{
-        background-color: #1453c9;
-        color: #fff;
+        background-color: #0840a8;
+        color: rgb(250, 237, 237);
         padding: 14px;
         font-size: 20px;
         border: none;
@@ -41,11 +70,25 @@ export default {
     }
 
     input{
-        color: #292929;
+        color: rgb(250, 237, 237);
         padding: 14px;
         font-size: 20px;
-        border: 1px solid #292929;
+        border: 1px solid rgb(250, 237, 237);
         border-radius: 4px;
         width: 60%;
+        background-color: #242424;
+    }
+
+    #active-container{
+        text-align: center;
+        padding: 0px 20px;
+        font-size: 18px;
+    }
+
+    .active-text{
+        color: rgb(250, 237, 237);
+        background-color: #0840a8;
+        padding: 4px;
+        border-radius: 4px;
     }
 </style>

@@ -1,38 +1,43 @@
 <template>
     <div class="task-category">
         <div class="category-header">
-            <h2>Test</h2>
+            <h2>{{category.title}} Tasks</h2>
+            <button v-if="category.active">Active</button>
+            <button v-else @click="setActive(category.id)">Set Active</button>
         </div>
         <div class="tasks-container">
-            <TaskItem/>
+            <TaskItem v-for="(task,index) in category.task" :key="index" :task="task" :category="category"/>
         </div>
     </div>
 </template>
 
 <script>
 import TaskItem from '../components/TaskItem.vue'
+import {store} from '../store.js'
 
 export default {
     name: 'TaskCategory',
     components: {
 		TaskItem
+    },
+    props: ['category'],
+    methods: {
+        setActive(categoryID){
+            store.setActiveCategory(categoryID);
+        }
     }
 }
 </script>
 
 <style scoped>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap');
-    :root{
-        --font-color: #292929;
-        --background-color: FFFFFF;
-        --accent-color: #1453c9;
-    }
-
     .task-category{
         padding-top: 20px;
-        min-height: 80vh;
-        background-color: #FFFFFF;
+        padding-bottom: 20px;
+        min-height: 75vh;
+        width: 350px;
+        background-color: #2e2e2e;
         margin: 20px 30px;
+        border-radius: 8px;
     }
 
     .category-header{
@@ -40,6 +45,20 @@ export default {
         margin: 10px 25px;
         padding-bottom: 20px;
         font-weight: 300;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        word-break: break-all;
+    }
+
+    .category-header button{
+        background-color: #0840a8;
+        border-radius: 4px;
+        border: none;
+        color: rgb(250, 237, 237);
+        padding: 5px 10px;
+        font-size: 17px;
+        word-break: keep-all;
     }
 
     .category-header::after{
@@ -47,7 +66,7 @@ export default {
         position : absolute;
         width : 100%;
         height : 3px;
-        background-color: #1453c9;
+        background-color: #0840a8;
         bottom: 0;
         left: 0;
         margin-bottom: 10px;
@@ -58,6 +77,5 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 350px;
     }
 </style>
