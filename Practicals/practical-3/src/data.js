@@ -6,13 +6,15 @@ export const taskData = [
       { details: 'Drinking the coffee'},
       { details: 'Making the coffee'},
       { details: 'Burning tea'}
-    ]
+    ],
+    active: true
   },
   {
     id: 2,
     title: 'Weekly',
     task: [
       { details: 'Picking up the coffee'}
-    ]
+    ],
+    active: false
   }
 ]
