@@ -27,18 +27,13 @@ export const store = {
         this.state.data.push({id:this.state.data.length+1, title:newCategory, task:[], active:false});
     },
     deleteTask(task, category){
-        let removeCategory = this.state.data.find((categoryFilter)=>categoryFilter.id === category.id);
-
-        removeCategory.task.find((taskFilter)=>{
-            if(taskFilter === task){
-                removeCategory.task.splice(taskFilter, 1);
-                return;
+        this.state.data.find((categoryFilter)=>{
+            if(categoryFilter.id === category.id){
+                categoryFilter.task.splice(categoryFilter.task.indexOf(task), 1);
             }
-        });
+        });  
     },
     updateTask(oldTask, updatedTask, category){
-        console.log(updatedTask);
-        console.log(oldTask);
         let updateCategory = this.state.data.find((categoryFilter)=>categoryFilter.id === category.id);
 
         updateCategory.task.find((taskFilter)=>{
@@ -47,7 +42,5 @@ export const store = {
                 return;
             }
         });
-
-        console.log(this.state.data);
     }
 }

@@ -17,7 +17,7 @@ export default {
     name: 'TaskItem',
     props: {
         task: Object,
-        category: Object,  
+        category: Object
     },
     data(){
         return{

@@ -57,6 +57,7 @@ export default {
         justify-content: center;
         align-items: center;
         background-color: #242424;
+        z-index: 100;
     }
 
     button{
