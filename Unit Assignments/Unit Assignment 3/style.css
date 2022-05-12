@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body{
+    background-image: URL("images/background_main.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100vw;
+    font-family: "montserrat", sans-serif;
+    color: #e4e4e4;
+}
+
+h1{
+    font-size: 40px;
+    color: #ed471b;
+    text-decoration: underline;
+}
+
+#last-updated{
+    margin-top: -25px;
+}
+
+#tags-div{
+    padding-top: 50px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+#tags-header{
+    padding-bottom: 4px;
+}
+
+#required-level-header{
+    font-size: 24px;
+}
+
+.tag{
+    border: #ed471b 1px solid;
+    padding: 4px;
+    display: inline-block;
+    margin: 4px 2px;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section{
+    padding: 100px 30px 0px;
+}
+
+.section-title{
+    font-size: 30px;
+    background-color: #c43d18;
+    padding: 4px 8px;
+    position: relative;
+}
+
+.section-title::after{
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: 0px; 
+    margin: 0 auto;
+    left: 0;
+    width: 30vw;
+    background-color: #c43d18;
+}
+
+#paragon-table{
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+#paragon-table table{
+    border: #ed471b solid 1px;
+    background-color: #ed481b10;
+}
+
+#paragon-table th{
+    color: #ed471b;
+    padding: 8px;
+    border: #ed471b solid 1px;
+    font-size: 20px;
+}
+
+#paragon-table td{
+    padding: 8px 20px;
+    border: #ed471b solid 1px;
+}
+
+.skills-heading{
+    text-align: center;
+    font-size: 25px;
+    text-decoration: underline;
+}
+
+#active-table{
+    width: 75%;
+}
+
+#passive-table{
+    width: 75%;
+}
+
+#skills-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#skills-section td, #skills-section th{
+    width: 25%;
+    text-align: center;
+    border: #c43d18 1px solid;
+    padding: 20px;
+    border-radius: 10px;
+    border-spacing: 10px;
+    background-color: #ed481b10;
+}
