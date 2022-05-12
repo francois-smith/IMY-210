@@ -1,0 +1,51 @@
+<!--Francois Smith u21649988-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>u21649988 | TA6</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+
+        
+        
+    </body>
+</html>
+
+<script>
+    let json_request, xml_request;
+
+    function getUpdateXML() {
+        xml_request = new XMLHttpRequest();
+        xml_request.onreadystatechange = function() {
+            if (xml_request.readyState === 4 && xml_request.status === 200) {
+                let data = xml_request.responseXML;
+
+                //DO STUFF
+            }
+        }
+
+        xml_request.open('GET','update.rss');
+        xml_request.send();
+    }
+
+    function getUpdateJSON() {
+        json_request = new XMLHttpRequest();
+        json_request.onreadystatechange = function() {
+            if (json_request.readyState === 4 && json_request.status === 200) {
+                const data = JSON.parse(json_request.responseText);
+
+                //DO STUFF
+            }
+        }
+
+        json_request.open('GET','update.json');
+        json_request.responseType()
+        json_request.send();
+    }
+</script>
+
+<style>
+
+</style>
