@@ -7,6 +7,8 @@ body{
     background-size: 100vw;
     font-family: "montserrat", sans-serif;
     color: #e4e4e4;
+    margin: 0px;
+    overflow-x: hidden;
 }
 
 h1{
@@ -122,4 +124,93 @@ section{
     border-radius: 10px;
     border-spacing: 10px;
     background-color: #ed481b10;
+}
+
+#gear-section{
+    padding-top: 100px;
+    display: grid;
+    width: 75%;
+    margin: auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.gear-item{
+    padding: 20px;
+    margin: 4px;
+}
+
+.gear-item h3{
+    text-align: center;
+    font-size: 22px;
+}
+
+.gear-item h4{
+    text-align: center;
+    margin-top: -20px;
+}
+
+.item-image{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.item-stats{
+    width: 100%;
+    text-align: center; 
+    padding: 3px;
+    margin-bottom: 20px;
+}
+
+.level-req{
+    text-align: right;
+}
+
+.stat-section-title{
+    text-align: center;
+    font-size: 20px;
+    position: relative;
+}
+
+.stat-section-title::before{
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: 50%; 
+    margin: 0 auto;
+    left: 0;
+    width: 70px;
+    background-color: #fff;
+}
+
+.stat-section-title::after{
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: 50%; 
+    margin: 0 auto;
+    right: 0;
+    width: 70px;
+    background-color: #fff;
+}
+
+#kunai-section{
+    padding-top: 100px;
+    display: grid;
+    width: 75%;
+    margin: auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    padding-bottom: 50px;
+}
+
+footer{
+    width: 100%;
+    background-color: #c43d18;
+    font-size: 22px;
+    text-align: center;
+    padding: 10px;
+    margin: 0px;
 }

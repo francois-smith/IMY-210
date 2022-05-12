@@ -104,15 +104,19 @@
                     </section>
                     <section>
                         <h2><span class="section-title">Gear</span></h2>
-                        <xsl:apply-templates select="character/class/items/item">
-                            <xsl:sort select="set"/>
-                        </xsl:apply-templates>
+                        <div id="gear-section">
+                            <xsl:apply-templates select="character/class/items/item">
+                                <xsl:sort select="set"/>
+                            </xsl:apply-templates>
+                        </div>
                     </section>
                     <section>
                         <h2><span class="section-title">Kanai’s Cube</span></h2>
-                        <xsl:apply-templates select="character/class/cubes/item">
-                            <xsl:sort select="name"/>
-                        </xsl:apply-templates>
+                        <div id="kunai-section">
+                            <xsl:apply-templates select="character/class/cubes/item">
+                                <xsl:sort select="name"/>
+                            </xsl:apply-templates>
+                        </div>       
                     </section>
                 </main>
                 <footer>
@@ -147,23 +151,33 @@
     </xsl:template>
 
     <xsl:template match="item">
-        <div>
+        <div style="border: {rarity} 1px solid; border-radius: 10px;" class="gear-item">
             <h3><span style="color: {rarity};"><xsl:value-of select="name"/> (<xsl:value-of select="set/@type"/>)</span></h3>
             <h4 style="color: {rarity};"><xsl:value-of select="rarity/@set"/>&#160;<xsl:value-of select="set"/></h4>
-            <img style="background-color: {rarity};">
-                <xsl:attribute name="src">
-                    <xsl:value-of select="concat('images/gear/', @image)"/>
-                </xsl:attribute>
-            </img><br/>
-            <span>Level requirement: <xsl:value-of select="requirements/level"/></span><br/>
+            <div class="item-image" style="background-color: {rarity};">
+                <img>
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="concat('images/gear/', @image)"/>
+                    </xsl:attribute>
+                </img><br/>
+            </div>
+            <div class="level-req">
+                <span>Level requirement: <xsl:value-of select="requirements/level"/></span>
+            </div>
             <xsl:if test="stats/defense">
-                <span><b>Armor</b>&#160;<xsl:value-of select="stats/defense/armor"/></span>
+                <div style="border: {rarity} 1px solid;" class="item-stats">
+                    <span><b>Armor</b>&#160;<xsl:value-of select="stats/defense/armor"/></span>
+                </div>
             </xsl:if>
             <xsl:if test="stats/attack">
-                <span><b>DPS</b>&#160;<xsl:value-of select="stats/attack/dps"/>&#160;<b>DMG</b>&#160;<xsl:value-of select="stats/attack/damage"/>&#160;<b>APS</b>&#160;<xsl:value-of select="stats/attack/aps"/></span>
+                <div style="border: {rarity} 1px solid;" class="item-stats">
+                    <span><b>DPS</b>&#160;<xsl:value-of select="stats/attack/dps"/>&#160;<b>DMG</b>&#160;<xsl:value-of select="stats/attack/damage"/>&#160;<b>APS</b>&#160;<xsl:value-of select="stats/attack/aps"/></span>
+                </div>
             </xsl:if><br/>
             <xsl:if test="stats/primary">
-                <span>Primary Stats</span><br/>
+                <div class="stat-section-title">
+                    <span>Primary Stats</span><br/>
+                </div>
                 <ul>
                     <xsl:for-each select="stats/primary/stat">
                         <li><xsl:value-of select="."/></li>
@@ -171,7 +185,9 @@
                 </ul>
             </xsl:if>
             <xsl:if test="stats/secondary">
-                <span>Secondary Stats</span><br/>
+                <div class="stat-section-title">
+                    <span>Secondary Stats</span><br/>
+                </div>
                 <ul>
                     <xsl:for-each select="stats/secondary/stat">
                         <li><xsl:value-of select="."/></li>
