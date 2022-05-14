@@ -14,7 +14,7 @@
             <xs:element name="title" type="titleType" minOccurs="1" maxOccurs="1"/>
             <xs:element name="type" type="typeType" minOccurs="1" maxOccurs="1"/>
             <xs:element name="date" type="dateType" minOccurs="1" maxOccurs="1"/>
-            <xs:element name="guests" type="guestsType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="guests" type="guestsType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="venue" type="venueType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="description" type="descriptionType" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
