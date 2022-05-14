@@ -104,7 +104,7 @@
 
     <xs:complexType name="guestsType">
         <xs:sequence>
-            <xs:element name="guest" type="guestType" maxOccurs="10"/>
+            <xs:element name="guest" type="guestType" minOccurs="0" maxOccurs="10"/>
         </xs:sequence>
     </xs:complexType>
 
