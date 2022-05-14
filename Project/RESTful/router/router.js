@@ -100,6 +100,7 @@ var router = (app, fs) => {
 
 
     /*
+        Most Basic POST request
         {
             "userName": "DaddyLongLegs",
             "event": {
@@ -113,6 +114,71 @@ var router = (app, fs) => {
                 "guests":[
                     
                 ]
+            } 
+        }
+
+        Most advanced POST request
+        {
+            "userName": "DaddyLongLegs",
+            "event": {
+                "id": "IMY210104",
+                "title": "Yeet",
+                "type": "Task",
+                "date": {
+                    "repeat": "Daily",
+                    "day": 4,
+                    "month": "January",
+                    "startingTime": "03:30 PM" ,
+                    "endingTime": "04:30 PM"
+                },
+                "guests":[
+                    {
+                        "guest":[
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            },
+                            {
+                                "name": ["yeet"],
+                                "email": ["yeet"]
+                            }
+                        ]
+                    }
+                ],
+                "venue": "IT Lounge",
+                "description": "World worst brain surgeon giving class on XML."
             } 
         }
     */
