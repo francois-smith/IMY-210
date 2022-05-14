@@ -59,7 +59,6 @@ This will start a client on port: 8080, you can navigate to your browser and ent
 <div align="center">
     <h2 style="margin-bottom: -10px">Phase 1</h2>
 </div>
-<hr/>
 
 ### File Validation
 - All XML files storing containing schedules are validated with a universal .dtd file, this file is robust to detect errors in XML files and keep a unified structure to all schedule files.
@@ -73,7 +72,6 @@ This will start a client on port: 8080, you can navigate to your browser and ent
 <div align="center">
     <h2 style="margin-bottom: -10px">Phase 2</h2>
 </div>
-<hr/>
 
 ### RESTful Server
 - The server provides an interface to perform CRUD events on XML files. These commands are hidden from the user and rather provides an easy to use interface to communicate with the server and manipulate data.
@@ -144,7 +142,7 @@ This will start a client on port: 8080, you can navigate to your browser and ent
 <div align="center">
     <h2 style="margin-bottom: -10px">Phase 3</h2>
 </div>
-<hr/>
+
 
 ### Application
 - The frontend of the client is built using Vue.js. Data is recieved from server then populated accordingly.
