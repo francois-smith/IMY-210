@@ -4,7 +4,7 @@
 <div align="center">
   <h1 align="center">IMY 210 | Project</h1>
   <p align="center">
-    <h2>Scheduling Application</h2>
+    <h3>Scheduling Application</h3>
     <br />
     <div style="margin-top: -25px">
         <a href="https://github.com/francois-smith/IMY-210/issues">Report Bug</a>
