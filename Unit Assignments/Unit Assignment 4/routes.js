@@ -16,6 +16,7 @@ var router = (app, fs) => {
             for(let item of data){
                 if(item.id == idParam){
                     res.send(item);
+                    return;
                 }
             }
             res.send("item not found");
@@ -71,6 +72,7 @@ var router = (app, fs) => {
         }
 
         let idParam = req.params["id"];
+        let newInfo = req.body;
         data_file = 'data.json';
 
         fs.readFile(data_file, (err, data) => {
@@ -78,7 +80,64 @@ var router = (app, fs) => {
                 throw err;
             }
 
-            let 
+            let parsedData = JSON.parse(data);
+            
+            let i = 0;
+            for(let item of parsedData){
+                if(item.id == idParam){
+                    parsedData[i] = newInfo;
+
+                    parsedData = JSON.stringify(parsedData);
+                    fs.writeFile(data_file, parsedData, (err, data) => {
+                        if(err){
+                            throw err;
+                        }
+                    });
+        
+                    res.send(parsedData);
+                    return;
+                }
+                i++;
+            }
+
+            res.send("Item with ID could not be found");
+        });
+    });
+
+    app.delete('/data/:id', (req, res) => {
+        if(req.params["id"] == null){
+            res.send("No ID specified");
+        }
+
+        let idParam = req.params["id"];
+        data_file = 'data.json';
+
+        fs.readFile(data_file, (err, data) => {
+            if(err){
+                throw err;
+            }
+
+            let parsedData = JSON.parse(data);
+            
+            let i = 0;
+            for(let item of parsedData){
+                if(item.id == idParam){
+                    parsedData.splice(i, 1)
+
+                    parsedData = JSON.stringify(parsedData);
+                    fs.writeFile(data_file, parsedData, (err, data) => {
+                        if(err){
+                            throw err;
+                        }
+                    });
+        
+                    res.send(parsedData);
+                    return;
+                }
+                i++;
+            }
+
+            res.send("Item with ID could not be found");
         });
     });
 }
