@@ -54,4 +54,112 @@
     <venue>IT Lounge</venue>
     <description>World worst brain surgeon giving class on XML.</description>
   </event>
+  <event id="IMY210105">
+    <title>Yeet</title>
+    <type>Task</type>
+    <date repeat="Daily">
+      <day>4</day>
+      <month>January</month>
+      <startingTime>03:30 PM</startingTime>
+      <endingTime>04:30 PM</endingTime>
+    </date>
+    <guests>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+    </guests>
+    <venue>IT Lounge</venue>
+    <description>World worst brain surgeon giving class on XML.</description>
+  </event>
+  <event id="IMY210106">
+    <title>Yeedwaaaaaaaaaaaawdt</title>
+    <type>Task</type>
+    <date repeat="Daily">
+      <day>4</day>
+      <month>January</month>
+      <startingTime>03:30 PM</startingTime>
+      <endingTime>04:30 PM</endingTime>
+    </date>
+    <guests>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+    </guests>
+    <venue>IT Lounge</venue>
+    <description>World worst brain surgeon giving class on XML.</description>
+  </event>
 </schedule>
