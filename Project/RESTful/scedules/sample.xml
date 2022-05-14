@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<schedule user="DaddyLongLegs">
+<schedule user="DaddyLongLegs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../validation/validate.xsd">
 	<!-- <schedule> can hold infinite <event> -->
 	<event id="A20131243">
-		<title>String no longer than 25 characters</title>
-		<type>A choice between three options: Event, Task, Appointment</type>
+		<title>String no l characters</title>
+		<type>Appointment</type>
 		<date repeat="weekly">	
 			<day>Numeric value between 1 to 31</day>
 			<month>A choice between any of the twelve months</month>
@@ -21,7 +21,7 @@
 	</event>
 	<event id="A20131242">
 		<!-- @id should be a 9 character unique identifier and must appear -->
-		<title>Events must have one title</title>
+		<title>Events must have oe title</title>
 		<type>Events must have one type</type>
 		<date repeat="Monthly">	
 			<!-- @repeat is option but can only hold the value "daily","weekly" or "monthly"-->

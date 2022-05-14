@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="schedule" type="root"/>
+
+    <xs:complexType name="root">
+        <xs:sequence>
+            <xs:element name="event" type="eventType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="user" type="xs:string" use="required"/>
+    </xs:complexType>
+    
+    <xs:complexType name="eventType">
+        <xs:sequence maxOccurs="1">
+            <xs:element name="title" type="titleType"/>
+            <xs:element name="type" type="typeType"/>
+            <xs:element name="date" type="dateType"/>
+            <xs:element name="event_tags" type="tagsType" />
+            <xs:element name="event_type_participation" type="participationType" />
+            
+            <xs:element name="event_organizer_email" type="emailType" />
+            <xs:element name="event_organizer_phone" type="phoneType" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="titleType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="25"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="typeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Event"/>
+            <xs:enumeration value="Task"/>
+            <xs:enumeration value="Appointment"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="dateType">
+        
+    </xs:complexType>
+</xs:schema> 
