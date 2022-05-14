@@ -1,2 +1,4 @@
 *.zip
 *.png
+node_modules
+node_modules/npm i body-parser
