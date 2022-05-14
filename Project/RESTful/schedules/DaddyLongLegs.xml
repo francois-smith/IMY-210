@@ -1,52 +1,57 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <schedule user="DaddyLongLegs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../validation/validate.xsd">
-	<event id="IMY210101">
-		<title>IMY 210 Classes</title>
-		<type>Event</type>
-		<date repeat="Weekly">	
-			<day>2</day>
-			<month>March</month>
-			<startingTime>03:30 PM</startingTime>
-			<endingTime>04:30 PM</endingTime>
-		</date>
-		<guests>
-			<guest>
-				<name>Yan</name>
-				<email>yan.wong@up.ac.za</email>
-			</guest>
-			<guest>
-				<name>Daddy</name>
-				<email>daddylonglegs@gmail.com</email>
-			</guest>
-		</guests>
-		<venue>IT building</venue>
-		<description>
+  <event id="IMY210101">
+    <title>IMY 210 Classes</title>
+    <type>Event</type>
+    <date repeat="Weekly">
+      <day>2</day>
+      <month>March</month>
+      <startingTime>03:30 PM</startingTime>
+      <endingTime>04:30 PM</endingTime>
+    </date>
+    <guests>
+      <guest>
+        <name>Yan</name>
+        <email>yan.wong@up.ac.za</email>
+      </guest>
+      <guest>
+        <name>Daddy</name>
+        <email>daddylonglegs@gmail.com</email>
+      </guest>
+    </guests>
+    <venue>IT building</venue>
+    <description>
 			World worst brain surgeon giving class on XML.
 		</description>
-	</event>
-
-	<event id="IMY210121">
-		<title>IMY 210 Classes</title>
-		<type>Event</type>
-		<date repeat="Weekly">	
-			<day>2</day>
-			<month>March</month>
-			<startingTime>03:30 PM</startingTime>
-			<endingTime>04:30 PM</endingTime>
-		</date>
-		<guests>
-			<guest>
-				<name>Yan</name>
-				<email>yan.wong@up.ac.za</email>
-			</guest>
-			<guest>
-				<name>Daddy</name>
-				<email>daddylonglegs@gmail.com</email>
-			</guest>
-		</guests>
-		<venue>IT building</venue>
-		<description>
-			World worst brain surgeon giving class on XML.
-		</description>
-	</event>
+  </event>
+  <event id="IMY210103">
+    <title>Yeet</title>
+    <type>Task</type>
+    <date>
+      <day>4</day>
+      <month>January</month>
+    </date>
+  </event>
+  <event id="IMY210104">
+    <title>Yeet</title>
+    <type>Task</type>
+    <date repeat="Daily">
+      <day>4</day>
+      <month>January</month>
+      <startingTime>03:30 PM</startingTime>
+      <endingTime>04:30 PM</endingTime>
+    </date>
+    <guests>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+    </guests>
+    <venue>IT Lounge</venue>
+    <description>World worst brain surgeon giving class on XML.</description>
+  </event>
 </schedule>
