@@ -368,10 +368,10 @@ var router = (app, fs) => {
         return "success";
     }
 
-     /*
-     * Function that takes in a event object and converts it into complete object.
-     * It is asumed that event passed is adheres to basic rules of document.
-     * Only runs after basic checks are validated.
+    /*
+     * Function that takes in a event and converts it into a xml buildable object.
+     * It is asumed that event passed is adheres to basic rules of the schema.
+     * Only gets called after basic checks are validated.
      */
     function createEvent(data){
         //Extract basic information from event
@@ -422,6 +422,7 @@ var router = (app, fs) => {
 
         return returnObject;
     }
+
     // app.post('/data', (req, res) => {
     //     if (Object.keys(req.body).length === 0) {
     //         res.send("No Item Specified");
