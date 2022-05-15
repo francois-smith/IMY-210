@@ -280,6 +280,7 @@ var router = (app, fs) => {
                 }
             }
         });
+        
         //If event was found with new event ID 
         if(returnMessage != "") return returnMessage;
 
