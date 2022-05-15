@@ -20,8 +20,8 @@
       </guest>
     </guests>
     <venue>IT building</venue>
-    <description>
-			World worst brain surgeon giving class on XML.
+    <description>&#xD;
+			World worst brain surgeon giving class on XML.&#xD;
 		</description>
   </event>
   <event id="IMY210103">
@@ -161,5 +161,22 @@
     </guests>
     <venue>IT Lounge</venue>
     <description>World worst brain surgeon giving class on XML.</description>
+  </event>
+  <event id="IMY210130">
+    <title>Yeet</title>
+    <type>Task</type>
+    <date>
+      <day>4</day>
+      <month>January</month>
+    </date>
+    <guests>
+      <guest>
+        <name>yeet</name>
+      </guest>
+      <guest>
+        <name>yeet</name>
+        <email>yeet</email>
+      </guest>
+    </guests>
   </event>
 </schedule>
