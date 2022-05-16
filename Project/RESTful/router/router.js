@@ -280,7 +280,7 @@ var router = (app, fs) => {
                 }
             }
         });
-        
+
         //If event was found with new event ID 
         if(returnMessage != "") return returnMessage;
 
@@ -422,6 +422,14 @@ var router = (app, fs) => {
         }
 
         return returnObject;
+    }
+
+    /**
+     * Request to POST an event to schedule.
+     * Takes in a username paramater as well as an event object.
+     */
+    app.put('/event', (req, res) => {
+
     }
 
     // app.post('/data', (req, res) => {
