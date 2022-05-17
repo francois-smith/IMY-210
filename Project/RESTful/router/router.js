@@ -219,7 +219,7 @@ var router = (app, fs) => {
             }
 
             //Run function to validate passed in event object for minimum requirements
-            let status = validateEvent(req.body, data);
+            let status = validateEvent(event, data);
 
             //If function returns anything other that "success" then the specified event is invalid
             if(status != "success"){
@@ -234,7 +234,17 @@ var router = (app, fs) => {
             }); 
 
             let newEvent = createEvent(req.body.event);
-            jsonFile.schedule.event.push(newEvent);
+            if(jsonFile.schedule.event != null){
+                jsonFile.schedule.event.push(newEvent);
+            }
+            else{
+                let events = {
+                    "event": newEvent
+                }
+
+                jsonFile.schedule["event"] = [newEvent];
+            }
+            
             
             var xml = builder.buildObject(jsonFile);
             fs.writeFile(data_file, xml, (err, data) => {
@@ -254,109 +264,280 @@ var router = (app, fs) => {
     });
 
     /**
+     * Request to POST an event to schedule.
+     * Takes in a username paramater as well as an event object.
+     */
+    app.put('/event', (req, res) => {
+        //If no username is passed in the return error message
+        if(req.body["userName"] == null){
+            res.send("No User Specified");
+            return;
+        }
+
+        //If no updated event object exists
+        if(req.body["updatedEvent"] == null){
+            res.send("No Updated Details Specified");
+            return;
+        }
+
+        //If no eventID to be updated is passed in the return error message
+        if(req.body["updatedEvent"]["id"] == null){
+            res.send("No ID Specified");
+            return;
+        }
+
+        //Get user and eventID from request body
+        let user = req.body["userName"];
+        let eventId = req.body["updatedEvent"]["id"];
+        let eventDetails = req.body["updatedEvent"];
+
+        //Construct file path using passed in username
+        data_file = './schedules/'+user+'.xml';
+
+        //Attempt to read file with specified username
+        fs.readFile(data_file, 'utf8', (err, data) => {
+            if(err){
+                //If file does not exist, then invalid user was specified
+                if(err.errno == -4058){
+                    res.send("User Does Not Exist");
+                    return;
+                }
+                return;
+            }
+
+            //Otherwise parse recieved file and save into variable
+            let json;
+            parser.parseString(data, function (err, result) {
+                json = result;
+            });   
+
+            let index = 0;
+            //Search all events from requested schedule file
+            for(let event of json.schedule.event){
+                //If event is found matching id specified then event was found, send back event to user
+                if(event["$"].id == eventId){
+                    console.log(eventDetails);
+                    //Run function to validate passed in event object for minimum requirements
+                    let status = validateEvent(eventDetails, data, true);
+
+                    //If function returns anything other that "success" then the specified event is invalid
+                    if(status != "success"){
+                        //Send back response message
+                        res.send("ERROR ADDING EVENT: "+ status);
+                        return;
+                    }
+
+                    let newEvent = createEvent(eventDetails);
+                    json.schedule.event[index] = newEvent;
+
+                    var xml = builder.buildObject(json);
+                    fs.writeFile(data_file, xml, (err, data) => {
+                        if(err){
+                            //If file does not exist, then invalid user was specified
+                            if(err.errno == -4058){
+                                res.send("User Does Not Exist");
+                                return;
+                            }
+                            return;
+                        }
+                        return;
+                    });
+
+                    res.json(json);
+                    return;
+                }
+                index++;
+            }
+
+            //Otherwise if all events have been checked then event does not exist in user schedule
+            res.json("Event Not Found In Schedule"); 
+        });
+    });
+
+    /**
+     * Request to POST an event to schedule.
+     * Takes in a username paramater as well as an event object.
+     */
+    app.delete('/event', (req, res) => {
+        //If no username is passed in the return error message
+        if(req.body["userName"] == null){
+            res.send("No User Specified");
+            return;
+        }
+
+        //If no eventID is passed in the return error message
+        if(req.body["eventId"] == null){
+            res.send("No Event Specified");
+            return;
+        }
+
+        //Get user and eventID from request body
+        let user = req.body["userName"];
+        let searchId = req.body["eventId"];
+
+        //Construct file path using passed in username
+        data_file = './schedules/'+user+'.xml';
+
+        //Attempt to read file with specified username
+        fs.readFile(data_file, 'utf8', (err, data) => {
+            if(err){
+                //If file does not exist, then invalid user was specified
+                if(err.errno == -4058){
+                    res.send("User Does Not Exist");
+                    return;
+                }
+                return;
+            }
+
+            //Otherwise parse recieved file and save into variable
+            let json;
+            parser.parseString(data, function (err, result) {
+                json = result;
+            });   
+
+            let index = 0;
+            //Search all events from requested schedule file
+            for(let event of json.schedule.event){
+                //If event is found matching id specified then event was found, send back event to user
+                if(event["$"].id == searchId){
+                    json.schedule.event.splice(index, 1);
+                    if(json.schedule.event.length == 0){
+                        json.schedule.event.push({});
+                    }
+
+                    var xml = builder.buildObject(json);
+                    fs.writeFile(data_file, xml, (err, data) => {
+                        if(err){
+                            //If file does not exist, then invalid user was specified
+                            if(err.errno == -4058){
+                                res.send("User Does Not Exist");
+                                return;
+                            }
+                            return;
+                        }
+                        return;
+                    });
+
+                    res.json(json);
+                    return;
+                }
+                index++;
+            }
+
+            //Otherwise if all events have been checked then event does not exist in user schedule
+            res.json("Event Not Found In Schedule"); 
+        });
+    });
+
+    /**
      * Function to validate an event object for minimum requirements.
      * Takes in a event(data) and a schedule object.
      * If any of the minimum requirements are not met, send back a response message.
      * Event is structured on client side before being posted, thus it asumed events are correct.
      * These are basic checks of only the necessities.
      */
-    function validateEvent(data, schedule){
+     function validateEvent(event, schedule, put = false){
         //First check if ID is specified, it asumed that id is generated and valid on client side.
-        if(data.event.id == undefined){
+        if(event.id == undefined){
             return "ID not set";
         }
         //Second check to see if ID is correct length, again client will format ID
-        if(data.event.id.length != 9){
+        if(event.id.length != 9){
             return "Invalid ID specified";
         }
-
-        //Variable used to hold return value from function below.
-        let returnMessage = "";
-        //Parse the passed in schedule and see if event with ID already exists in schedule
-        parser.parseString(schedule, function (err, result) {
-            for(let existingEvent of result.schedule.event){
-                if(data.event.id == existingEvent["$"].id){
-                    returnMessage = "ID already exists";
+    
+        if(put == false){
+            //Variable used to hold return value from function below.
+            let returnMessage = "";
+            //Parse the passed in schedule and see if event with ID already exists in schedule
+            parser.parseString(schedule, function (err, result) {
+                if(result.schedule.event != null){
+                    for(let existingEvent of result.schedule.event){
+                        if(event.id == existingEvent["$"].id){
+                            returnMessage = "ID already exists";
+                        }
+                    }
                 }
-            }
-        });
-
-        //If event was found with new event ID 
-        if(returnMessage != "") return returnMessage;
-
+            });
+    
+            //If event was found with new event ID 
+            if(returnMessage != "") return returnMessage;
+        }
+    
+    
         //If no title is specified
-        if(data.event.title == undefined){
+        if(event.title == undefined){
             return "Title not set";
         }
         //Second smaller check to see if title is too long, client side will do validation too
-        if(data.event.title.length > 25){
-
+        if(event.title.length > 25){
+    
         }
-
+    
         //Array of valid event types
         let types = ["Event", "Task", "Appointment"];
         //Check if new event type is set and equal to one of the 3 values
-        if(data.event.type == undefined || types.indexOf(data.event.type) == -1){
+        if(event.type == undefined || types.indexOf(event.type) == -1){
             return "Type not set";
         }
-
+    
         //Check if date object exists within event
-        if(data.event.date == undefined){
+        if(event.date == undefined){
             return "Date not set";
         }
-
+    
         //If repeat is defines, check if it is a valid value
         let repeat = ["Daily", "Weekly", "Monthly"];
-        if(data.event.date.repeat != undefined){
-            if(repeat.indexOf(data.event.date.repeat) == -1){
+        if(event.date.repeat != undefined){
+            if(repeat.indexOf(event.date.repeat) == -1){
                 return "Invalid repeat";
             }
         }
-
+    
         //Check if date has a day value
-        if(data.event.date.day == undefined){
+        if(event.date.day == undefined){
             return "Date day not set";
         }
         //Check if valid day is specified and it does not go out of bounds
-        if(data.event.date.day > 31 || data.event.date.day < 0){
+        if(event.date.day > 31 || event.date.day < 0){
             return "Invalid date day set";
         }
-
+    
         //Check if event has month set within date object
-        if(data.event.date.month == undefined){
+        if(event.date.month == undefined){
             return "Date month not set";
         }
         //Array of months of year, used to validate if new event month is valid
         let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        if(months.indexOf(data.event.date.month) == -1){
+        if(months.indexOf(event.date.month) == -1){
             return "Invalid date month set";
         }
-
+    
         //Check if event has guests object(can be empty)
-        if(data.event.guests == undefined){
+        if(event.guests == undefined){
             return "Guests not set";
         }
         else{
             
             //Checks if guests exist within guests object and if they do validate them, otherwise if guests are empty then continue
-
-            if(data.event.guests.length != 0){
-                if(data.event.guests[0].guest.length > 10){
+    
+            if(event.guests.length != 0){
+                if(event.guests[0].guest.length > 10){
                     return "Too many guests";
                 }
-
+    
                 //If number of guests is fine, loop through every guest and validate them
-                for(let guest of data.event.guests[0].guest){
+                for(let guest of event.guests[0].guest){
                     //If guest does not have email or name defined then they are invalid
                     if(guest.name == undefined && guest.email == undefined){
                         return "Invalid guest in list";
                     }
-
+    
                     //Check if name is correct length if it is defined
                     if(guest.name != undefined && guest.name.length > 50){
                         return "Invalid guest in list";
                     }
-
+    
                     //Check if email is correct length if it is defined
                     if(guest.email != undefined && guest.email.length > 50){
                         return "Invalid guest in list";
@@ -364,11 +545,11 @@ var router = (app, fs) => {
                 }
             }
         }
-
+    
         //If all checks pass then it is assumed that event is correct
         return "success";
     }
-
+    
     /*
      * Function that takes in a event and converts it into a xml buildable object.
      * It is asumed that event passed is adheres to basic rules of the schema.
@@ -422,14 +603,6 @@ var router = (app, fs) => {
         }
 
         return returnObject;
-    }
-
-    /**
-     * Request to POST an event to schedule.
-     * Takes in a username paramater as well as an event object.
-     */
-    app.put('/event', (req, res) => {
-
     }
 
     // app.post('/data', (req, res) => {
