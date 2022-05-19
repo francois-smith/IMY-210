@@ -1,17 +1,27 @@
 <template>
-	<div>
-		<h1>Search for user</h1>
-		<input type="number" v-model="userId"/>
-		<select v-model="dataSet">
-			<option>User Information</option>
-			<option>User Posts</option>
-			<option>User Todo</option>
-		</select>
-		<button v-on:click="search">Search</button>
-		<UsersList :userData="userData" :userId="userId"/>
-		<TodoList :todos="todos" :userId="userId" :userData="userData"/>
-		<PostsList :posts="posts" :userId="userId" :userData="userData"/>
-		<h1>{{this.errorResponse}}</h1>
+	<div class="main-container">
+		<div class="inner-container">
+			<div>
+				<h1 class="header">Search For User Data</h1>
+			</div>
+			<hr/>
+			<div class="user-inputs">
+				<div>
+					<select @change="search" v-model="dataSet">
+						<option>User Information</option>
+						<option>User Posts</option>
+						<option>User Todo</option>
+					</select>
+				</div>
+				<div>
+					<input type="number" v-on:input="search" v-model="userId"/>
+				</div>
+			</div>
+			<UsersList @update="updateUser" :userData="userData" :userId="userId"/>
+			<TodoList :todos="todos" :userId="userId" :userData="userData"/>
+			<PostsList :posts="posts" :userId="userId" :userData="userData"/>
+			<h1 class="search-error">{{this.errorResponse}}</h1>
+		</div>
 	</div>
 </template>
 
@@ -58,14 +68,21 @@
 				const data = await response.json();
 				if(!response.ok || data === {}) {
 					this.errorResponse = "User not Found";
+					this.posts = {};
+					this.todos = {};
+					this.userData = {};
 					return;
 				}
 				this.userData = data;
 				this.posts = {};
 				this.todos = {};
 				this.errorResponse = "";
+				document.querySelector("#response-message").classList.remove("success");
 			})
 
+		},
+		updateUser: function(data) {
+			this.userData = data;
 		},
 		getPosts: function(){
 			let url = "https://jsonplaceholder.typicode.com/posts?userId="+this.userId;
@@ -73,6 +90,9 @@
 				const data = await response.json();
 				if(!response.ok || Object.keys(data).length === 0) {
 					this.errorResponse = "User not Found";
+					this.posts = {};
+					this.todos = {};
+					this.userData = {};
 					return;
 				}
 				console.log(typeof data);
@@ -88,6 +108,9 @@
 				const data = await response.json();
 				if(!response.ok || Object.keys(data).length === 0) {
 					this.errorResponse = "User not Found";
+					this.posts = {};
+					this.todos = {};
+					this.userData = {};
 					return;
 				}
 				this.todos = data;
@@ -105,5 +128,52 @@
 
 	*{
 		font-family: "Montserrat", sans-serif;
+		margin: 0px;
+		overflow-x: hidden;
+	}
+	.main-container{
+		display: flex;
+		justify-content: center;
+		width: 100vw;
+		min-height: 100vh;
+		padding: 50px;
+		background-color: rgb(245, 245, 245);
+		margin: 0px;
+	}
+	.inner-container{
+		width: 600px;
+		padding: 20px;
+		background-color: #fff;
+		border-radius: 20px;
+	}
+	.header{
+		text-align: center;
+		color: #3878cc;
+		padding: 10px
+	}
+	hr{
+		margin-bottom: 20px;
+		color: #3878cc;
+	}
+	.user-inputs{
+		display: flex;
+		width: 100%
+	}
+	.user-inputs div{
+		width: 50%;
+	}
+	.user-inputs div input, .user-inputs div select{
+		width: 95%;
+		padding: 5px;
+	}
+	.search-error{
+		padding-top: 50px;
+		text-align: center;
+		text-decoration: underline;
+		color: #3878cc;
+		font-size: 35px;
+	}
+	.blue{
+		color: #3878cc;
 	}
 </style>
