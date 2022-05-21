@@ -1,52 +1,259 @@
 <template>
-	<div>
-		<ScheduleMain/>
-	</div>
+  <div id="main-container">
+    <div id="sidebar">
+		<div id="user-container">
+			<img src="./media/user.png">
+			<select>
+				<option>DaddyLongLegs</option>
+				<option>John Travolta</option>
+				<option>Michael Jordan</option>
+				<option>Yeet Skadeet</option>
+				<option>Jeff</option>
+			</select>
+		</div>
+		<div class="user-calendar" v-on:click="loadCalendar($event, 'DaddyLongLegs')">
+			DaddyLongLegs
+		</div>
+		<div class="user-calendar" v-on:click="loadCalendar($event, 'JohnTravolta')">
+			John Travolta
+		</div>
+		<div class="user-calendar" v-on:click="loadCalendar($event, 'MichaelJordan')">
+			Michael Jordan
+		</div>
+		<div class="user-calendar" v-on:click="loadCalendar($event, 'YeetSkadeet')">
+			Yeet Skadeet
+		</div>
+		<div class="user-calendar" v-on:click="loadCalendar($event, 'Jeff')">
+			Jeff
+		</div>
+    </div>
+    <div id="schedule-container">
+		<div id="schedule-header">
+			<h2>{{activeUser}}</h2>
+		</div>
+      <ScheduleMain @deleteEvent="deleteEvent" @updateEvent="updateEvent" @addEvent="addEvent" :schedule="activeSchedule" :activeUser="activeUser"/>
+    </div>
+  </div>
 </template>
 
 <script>
 import ScheduleMain from './components/Schedule.vue'
+import { useToast } from "vue-toastification";
 
 export default {
 	name: 'App',
 	components: {
 		ScheduleMain
+	},
+	setup() {
+      const toast = useToast();
+      return { toast }
+    },
+	data(){
+		return {
+			activeSchedule: {},
+			activeUser: "No Active Schedule"
+		}
+	},
+	methods: {
+		loadCalendar: function(event, name){
+			let calendars = document.getElementsByClassName("user-calendar");
+			for(let calendar of calendars){
+				calendar.classList.remove("active-calendar");
+			}
+			event.target.classList.add("active-calendar");
+			
+			fetch("http://localhost:3000/schedule/"+name)
+			.then(async response => {
+				let data;
+				try {
+					data = await response.json();
+				} catch (e) {
+					this.activeSchedule = {}
+					this.activeUser = "Shedule Not Found"
+					return;
+				}
+				this.activeUser = data.schedule.$.user;
+				this.activeUser += "'s Schedule";
+				this.activeSchedule = data;
+			});
+		},
+		deleteEvent(event){
+			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user;
+			let eventId = event;
+			const requestOptions = {
+				method: "DELETE",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ "userName": userSchedule, "eventId": eventId.toString()})
+			};
+
+			fetch("http://localhost:3000/event", requestOptions)
+			.then(async response => {
+				let data = await response.json();
+				this.activeUser = data.schedule.$.user;
+				this.activeUser += "'s Schedule";
+				this.activeSchedule = data;
+				this.popup("Event successfully deleted");
+			});
+		},
+		updateEvent(event){
+			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user;
+			let request = {
+				"userName": userSchedule,
+				"updatedEvent": event
+			}
+			const requestOptions = {
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(request)
+			};
+
+			fetch("http://localhost:3000/event", requestOptions)
+			.then(async response => {
+				let data = await response.json();
+				this.activeUser = data.schedule.$.user;
+				this.activeUser += "'s Schedule";
+				this.activeSchedule = data;
+				this.popup("Event successfully updated");
+			});
+		},
+		addEvent(event){
+			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user;
+			let request = {
+				"userName": userSchedule,
+				"event": event
+			}
+			const requestOptions = {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(request)
+			};
+
+			fetch("http://localhost:3000/event", requestOptions)
+			.then(async response => {
+				let data = await response.json();
+				this.activeUser = data.schedule.$.user;
+				this.activeUser += "'s Schedule";
+				this.activeSchedule = data;
+				this.popup("Event successfully added");
+			});
+		},
+        popup(message){
+            this.toast.success(message, {
+                position: "top-center",
+                timeout: 3000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: true,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: false,
+                rtl: false
+            });
+        }
 	}
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+#main-container{
+	display: grid;
+	grid-template-columns: 250px 1fr;
+	grid-template-rows: 1fr;
+	height:100vh;
+}
+
+#sidebar{
+	grid-area: 1 / 1 / 2 / 2;
+	border: 1px solid #e4e4e4 !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 75px;
+}
+
+#sidebar img{
+	width: 75px;
+	padding-bottom: 25px;
+}
+
+#sidebar select{
+	width: 80%;
+	padding: 6px;
+	font-size: 16px;
+	border: none;
+	background-color: #fff;
+}
+
+#user-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 80%;
+	border-bottom: 1px solid #e4e4e49d !important;
+	padding-bottom: 50px;
+}
+
+.user-calendar{
+	text-align: center;
+	cursor: pointer;
+	width: 80%;
+	padding: 10px 0px;
+	border-bottom: 1px solid #e4e4e49d !important;
+}
+
+.user-calendar:hover{
+	background-color: rgb(226, 226, 226);
+	width: 100%;
+}
+
+.active-calendar{
+	background-color: var(--color-dark-accent) !important;
+	color: #fff;
+	width: 100%;
+}
+
+#schedule-container{
+	grid-area: 1 / 2 / 2 / 3;
+	padding: 40px;
+	background-color: #f5f5f5cb;
+}
+
+#schedule-container h2{
+	padding-bottom: 35px;
+	font-weight: 500;
+	font-size: 28px;
+}
+
+*{
+	margin: 0px;
+	padding:  0px;
+}
+
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+	font-family: "Nunito", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	
+	color: #2c3e50;
 }
 
 body {
-  font-family: sans-serif;
-  font-weight: 100;
-  --grey-100: #e4e9f0;
-  --grey-200: #cfd7e3;
-  --grey-300: #b5c0cd;
-  --grey-800: #3e4e63;
-  --grid-gap: 1px;
-  --day-label-size: 20px;
+	--color-dark: #363638;
+	--color-gray: #8d8c8a;
+	--color-light: #f6f6f6;
+	--color-dark-accent: #55b0f2;
+	--color-accent: #55b0f2;
 }
 
-ol,
-li {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.calendar-month-header {
-  display: flex;
-  justify-content: space-between;
-  background-color: #fff;
-  padding: 10px;
+ol, li {
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
 </style>
