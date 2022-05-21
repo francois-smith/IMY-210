@@ -11,15 +11,15 @@ var router = (app, fs) => {
      * Takes in a username paramater and sends back schedule of specified user.
      * If no schedule with passed in user exists, send back error message.
      */
-    app.get('/schedule', (req, res) => {
+    app.get('/schedule/:userName', (req, res) => {
         //If no username is passed in the return error message
-        if(req.body["userName"] == null){
+        if(req.params["userName"] == null){
             res.send("No User Specified");
             return;
         }
 
         //Get user from request body
-        let user = req.body["userName"];
+        let user = req.params["userName"];
 
         //Construct file path using passed in username
         data_file = './schedules/'+user+'.xml';
@@ -34,7 +34,7 @@ var router = (app, fs) => {
                 }
                 return;
             }
-
+            
             //Otherwise parse recieved file to JSON and send back response.
             parser.parseString(data, function (err, result) {
                 res.send(result);
@@ -47,22 +47,22 @@ var router = (app, fs) => {
      * Request to retrieve a n event from specific schedule.
      * Takes in a username paramater as well as eventID.
      */
-    app.get('/event', (req, res) => {
+     app.get('/event/:userName/:eventId', (req, res) => {
         //If no username is passed in the return error message
-        if(req.body["userName"] == null){
+        if(req.params["userName"] == null){
             res.send("No User Specified");
             return;
         }
 
         //If no eventID is passed in the return error message
-        if(req.body["eventId"] == null){
+        if(req.params["eventId"] == null){
             res.send("No Event Specified");
             return;
         }
 
         //Get user and eventID from request body
-        let user = req.body["userName"];
-        let searchId = req.body["eventId"];
+        let user = req.params["userName"];
+        let searchId = req.params["eventId"];
 
         //Construct file path using passed in username
         data_file = './schedules/'+user+'.xml';
@@ -97,7 +97,6 @@ var router = (app, fs) => {
             res.json("Event Not Found In Schedule"); 
         });
     });
-
 
     /*
         Most Basic POST request
@@ -234,7 +233,8 @@ var router = (app, fs) => {
             }); 
 
             let newEvent = createEvent(req.body.event);
-            if(jsonFile.schedule.event != null){
+            console.log(jsonFile.schedule.event);
+            if(jsonFile.schedule.event[0].$ != undefined){
                 jsonFile.schedule.event.push(newEvent);
             }
             else{
@@ -314,9 +314,7 @@ var router = (app, fs) => {
             let index = 0;
             //Search all events from requested schedule file
             for(let event of json.schedule.event){
-                //If event is found matching id specified then event was found, send back event to user
                 if(event["$"].id == eventId){
-                    console.log(eventDetails);
                     //Run function to validate passed in event object for minimum requirements
                     let status = validateEvent(eventDetails, data, true);
 
@@ -453,7 +451,7 @@ var router = (app, fs) => {
             parser.parseString(schedule, function (err, result) {
                 if(result.schedule.event != null){
                     for(let existingEvent of result.schedule.event){
-                        if(event.id == existingEvent["$"].id){
+                        if(existingEvent.id !== undefined && event.id == existingEvent["$"].id){
                             returnMessage = "ID already exists";
                         }
                     }
@@ -518,9 +516,7 @@ var router = (app, fs) => {
             return "Guests not set";
         }
         else{
-            
             //Checks if guests exist within guests object and if they do validate them, otherwise if guests are empty then continue
-    
             if(event.guests.length != 0){
                 if(event.guests[0].guest.length > 10){
                     return "Too many guests";
