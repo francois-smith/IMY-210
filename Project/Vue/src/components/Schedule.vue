@@ -1,14 +1,20 @@
 <template>
 	<div class="calendar-month">
-		<div class="calendar-month-header">
-		<ScheduleInformation :selected-date="selectedDate" class="calendar-month-header-selected-month"/>
-		<ScheduleMonthSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
+		<div class="calendar-header">
+			<ScheduleMonthSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
+			<ScheduleAddEvent  v-bind:style="Object.keys(schedule).length === 0 ? 'display: none;' : 'display: block;'" @openAdd="addingEvent = true" class="add-event"/>
 		</div>
 		<ScheduleWeekdays/>
 
 		<ol class="days-grid">
-			<ScheduleDay v-for="day in days" :key="day.date" :day="day" :is-today="day.date === today"/>
+			<ScheduleDay @selectEvent="updateSelectedEvent" v-for="day in days" :key="day.date" :day="day" :is-today="day.date === today" :schedule="schedule" :selectedEvent="selectedEvent"/>
 		</ol>
+		<div class="update-container" :class="!(Object.keys(selectedEvent).length === 0) ? 'on-screen' : 'off-screen'">
+			<EditEvent v-if="activeUser != 'No Active Schedule'" @selectEvent="updateSelectedEvent" @updateEvent="updateEvent" @deleteEvent="deleteEvent" :event="selectedEvent"/>
+		</div>
+		<div class="add-container" :class="addingEvent ? 'on-screen' : 'off-screen'">
+			<AddEvent v-if="activeUser != 'No Active Schedule'" @addEvent="addEvent" @closeAdd="addingEvent = false"/>
+		</div>
 	</div>
 </template>
 
@@ -16,10 +22,12 @@
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
-import ScheduleInformation from "./ScheduleInformation.vue"
+import ScheduleAddEvent from "./ScheduleAddEvent.vue"
 import ScheduleMonthSelector from "./SheduleMonthSelector.vue"
 import ScheduleDay from "./ScheduleDay.vue"
 import ScheduleWeekdays from "./SheduleWeekdays.vue"
+import EditEvent from './EditEvent';
+import AddEvent from './AddEvent';
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
@@ -27,15 +35,39 @@ dayjs.extend(weekOfYear);
 export default {
 	name: 'ScheduleMain',
 	components: {
-		ScheduleInformation,
+		ScheduleAddEvent,
 		ScheduleMonthSelector,
 		ScheduleDay,
-		ScheduleWeekdays
+		ScheduleWeekdays,
+		EditEvent,
+		AddEvent
 	},
 	data() {
 		return {
-			selectedDate: dayjs()
+			selectedDate: dayjs(),
+			selectedEvent: {},
+			addingEvent: false
 		};
+	},
+	watch: {
+		selectedEvent: function() {
+			if(Object.keys(this.selectedEvent).length == 0){
+				document.documentElement.style.overflow = 'auto';
+				return;
+			}
+			document.documentElement.style.overflow = 'hidden';
+		},
+		addingEvent: function() {
+			if(this.addingEvent != true){
+				document.documentElement.style.overflow = 'auto';
+				return;
+			}
+			document.documentElement.style.overflow = 'hidden';
+		}
+	},
+	props: {
+		schedule: Object,
+		activeUser: String
 	},
 	computed: {
 		days() {
@@ -109,43 +141,89 @@ export default {
 		},
 		selectDate(newSelectedDate) {
 			this.selectedDate = newSelectedDate;
+		},
+		updateSelectedEvent(event){
+			this.selectedEvent = event;
+		},
+		updateEvent(event){
+			this.selectedEvent = {};
+			this.$emit('updateEvent', event);
+		},
+		deleteEvent(id){
+			this.selectedEvent = {};
+			this.$emit('deleteEvent', id);
+		},
+		addEvent(event){
+			this.addingEvent = false;
+			this.$emit('addEvent', event);
 		}
 	}
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.update-container{
+	transition: all 0.55s;
+	position: fixed;
+	left: 0px;
+	bottom: 100vh;
+	width: 100vw;
+	height: 100vh;
+}
+
+.add-container{
+	transition: all 0.55s;
+	position: fixed;
+	left: 0px;
+	bottom: 100vh;
+	width: 100vw;
+	height: 100vh;
+}
+
+.on-screen{
+	bottom: 0px;
+}
+
+.off-screen{
+	bottom: 100vh;
+}
+
+.calendar-header {
+	display: flex;
+	justify-content: space-between;
+	background-color: #fff;
+	padding-bottom: 40px;
+	border-bottom: 1px solid #e4e4e49d !important;
+}
+
 .calendar-month {
-  position: relative;
-  background-color: var(--grey-200);
-  border: solid 1px var(--grey-300);
+	position: relative;
+	background-color: #fff;
+	padding: 35px;
 }
 
-.day-of-week {
-  color: var(--grey-800);
-  font-size: 18px;
-  background-color: #fff;
-  padding-bottom: 5px;
-  padding-top: 10px;
+.weekdays-container {
+	text-align: center;
+	font-size: 18px;
+	padding-bottom: 15px;
+	padding-top: 25px;
+	color: rgb(87, 87, 87);
 }
 
-.day-of-week,
+.weekdays-container, .days-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+}
+
+.weekdays-container > * {
+	text-align: right;
+	padding-right: 5px;
+}
+
 .days-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.day-of-week > * {
-  text-align: right;
-  padding-right: 5px;
-}
-
-.days-grid {
-  height: 100%;
-  position: relative;
-  grid-column-gap: var(--grid-gap);
-  grid-row-gap: var(--grid-gap);
-  border-top: solid 1px var(--grey-200);
+	height: 100%;
+	position: relative;
+	grid-column-gap: -1px;
+	grid-row-gap: -1px;
 }
 </style>
