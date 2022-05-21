@@ -1,5 +1,5 @@
 <template>
-    <ol class="day-of-week">
+    <ol class="weekdays-container">
         <li v-for="weekday in weekdays" :key="weekday">
         {{ weekday }}
         </li>
@@ -8,7 +8,6 @@
 
 <script>
 const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
 
 export default {
 	name: 'ScheduleWeekdays',
