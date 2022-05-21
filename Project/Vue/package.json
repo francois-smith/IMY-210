@@ -10,7 +10,11 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "dayjs": "1.8.30",
-    "vue": "^3.2.13"
+    "moment": "^2.29.3",
+    "vue": "^3.2.13",
+    "vue-datepicker-next": "^1.0.2",
+    "vue-month-picker": "^1.6.0",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
