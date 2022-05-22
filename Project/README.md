@@ -114,7 +114,7 @@ This will start a client on port: 8080, you can navigate to your browser and ent
                         "startingTime": "03:30 PM", //optional
                         "endingTime": "04:30 PM" //optional
                     },
-                    "guests":[ //optional
+                    "guests":[ //required
                         {
                             "guest":[ //optional, max 10 entries
                                 { //each guest must contain at least a name or title
@@ -134,10 +134,52 @@ This will start a client on port: 8080, you can navigate to your browser and ent
             }
         ```
 - PUT
-    - To be filled
+    - There is a single PUT command.
+    - POST takes in a user and update event, the user is used to determine what schedule to update the event in. The updated event is validated on server side and relevent error are returned.
+    - An example request looks as follows:
+        ```
+            {
+                "userName": "ExampleUser", //required
+                "updatedEvent": { 
+                    "id": "EVT123456", //required
+                    "title": "Example", //required
+                    "type": "Task", //required
+                    "date": {
+                        "repeat": "Daily", //optional
+                        "day": 4, //required
+                        "month": "January", //required
+                        "startingTime": "03:30 PM", //optional
+                        "endingTime": "04:30 PM" //optional
+                    },
+                    "guests":[ //required
+                        {
+                            "guest":[ //optional, max 10 entries
+                                { //each guest must contain at least a name or title
+                                    "name": ["yeet"], //optional
+                                    "email": ["yeet"] //optional
+                                },
+                                {
+                                    "name": ["yeet"], //optional
+                                    "email": ["yeet"] //optional
+                                }
+                            ]
+                        }
+                    ],
+                    "venue": "Example", //optional
+                    "description": "Example" //optional
+                } 
+            }
+        ```
 
 - DELETE
-    - To be filled
+    - There is a single DELETE command. This will load the file associated with the inputed user, if no event is found with the passed in ID then an error is returned.  
+        ```
+            {
+                "userName": "ExampleUser", //required
+                "eventId": "EVT123456" //required
+            }
+        ```
+        It will return the new JSON object of the schedule after delete to allow the calendar on the clientside to be updated.
 
 <div align="center">
     <h2 style="margin-bottom: -10px">Phase 3</h2>
