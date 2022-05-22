@@ -2,7 +2,7 @@
   <div id="main-container">
     <div id="sidebar">
 		<div id="user-container">
-			<img src="./media/user.png">
+			<img id="user-icon" src="./media/user.png">
 			<span id="signed-in-as">Signed in as</span>
 			<select v-model="signedInUser" @change="updateWidth($event)">
 				<option>DaddyLongLegs</option>
@@ -28,8 +28,23 @@
 		<div class="user-calendar" v-on:click="loadCalendar($event, 'Jeff')">
 			Jeff
 		</div>
-		<div id="RSS Feed">
-
+		<div id="rss-feed">
+			<h2 id="rss-feed-title">RSS Feed</h2>
+			<hr/>
+			<div class="feed-item" v-for="item in feed.event" :key="item">
+				<div class="feed-item-details">
+					<span class="feed-user">{{item.$.user.replace(/([A-Z])/g, ' $1').trim()}}</span>
+					<div class="feed-details">
+						<span v-if="item.$.status == 'updated'" class="updated feed-detail">Updated</span>
+						<span v-if="item.$.status == 'added'" class="added feed-detail">Added</span>
+						<span v-if="item.$.status == 'removed'" class="removed feed-detail">Removed</span>
+						<span> an event</span>
+					</div>
+				</div>
+				<img v-if="item.$.status == 'updated'" src="./media/edit.svg">
+				<img v-if="item.$.status == 'added'" src="./media/add2.svg">
+				<img v-if="item.$.status == 'removed'" src="./media/delete2.svg">
+			</div>
 		</div>
     </div>
     <div id="schedule-container">
@@ -123,6 +138,7 @@ export default {
 				this.activeSchedule = data;
 				this.viewedSchedule = data.schedule.$.user;
 				this.popup("Event successfully deleted");
+				this.updateRSS();
 			});
 		},
 		updateEvent(event){
@@ -145,6 +161,7 @@ export default {
 				this.activeSchedule = data;
 				this.viewedSchedule = data.schedule.$.user;
 				this.popup("Event successfully updated");
+				this.updateRSS();
 			});
 		},
 		addEvent(event){
@@ -167,13 +184,14 @@ export default {
 				this.activeSchedule = data;
 				this.viewedSchedule = data.schedule.$.user;
 				this.popup("Event successfully added");
+				this.updateRSS();
 			});
 		},
 		updateRSS(){
 			fetch("http://localhost:3000/RSS")
 			.then(async response => {
 				let data = await response.json();
-				this.feed = data;
+				this.feed = data.feed;
 				console.log(JSON.parse(JSON.stringify(this.feed)));
 			});
 		},
@@ -198,7 +216,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito');
 
 #main-container{
 	display: grid;
@@ -213,10 +231,11 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 75px;
+	padding-top: 50px;
+	position: relative;
 }
 
-#sidebar img{
+#user-icon{
 	width: 75px;
 	padding-bottom: 25px;
 }
@@ -241,6 +260,10 @@ export default {
 	padding-bottom: 50px;
 }
 
+#user-container:nth-child(2){
+	border-top: 1px solid #e4e4e49d !important;
+}
+
 .user-calendar{
 	text-align: center;
 	cursor: pointer;
@@ -258,6 +281,73 @@ export default {
 	background-color: var(--color-dark-accent) !important;
 	color: #fff;
 	width: 100%;
+}
+
+#rss-feed{
+	padding: 50px 0px;
+	width: 80%;
+}
+
+#rss-feed-title + hr{
+	border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    margin-bottom: 15px;
+}
+
+#rss-feed-title{
+	color: #555;
+	font-size: 24px;
+	font-weight: 500;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.feed-item-details{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.feed-item{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 6px;
+	margin-bottom: 12px;
+}
+
+.feed-user{
+	font-size: 19px
+}
+
+.feed-item img{
+	height: 25px;
+}
+
+.feed-details{
+	display: flex;
+	align-items: center;
+}
+
+.feed-detail{
+	padding: 3px 5px;
+	color: #fff;
+	border-radius: 5px;
+	margin-right: 4px;
+}
+
+.updated{
+	background-color: #ce9739;
+}
+
+.added{
+	background-color: #6da06f;
+}
+
+.removed{
+	background-color: #c13525;
 }
 
 #schedule-container{
