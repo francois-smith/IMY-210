@@ -3,7 +3,8 @@
     <div id="sidebar">
 		<div id="user-container">
 			<img src="./media/user.png">
-			<select>
+			<span id="signed-in-as">Signed in as</span>
+			<select v-model="signedInUser" @change="updateWidth($event)">
 				<option>DaddyLongLegs</option>
 				<option>John Travolta</option>
 				<option>Michael Jordan</option>
@@ -31,7 +32,7 @@
 		<div id="schedule-header">
 			<h2>{{activeUser}}</h2>
 		</div>
-      <ScheduleMain @deleteEvent="deleteEvent" @updateEvent="updateEvent" @addEvent="addEvent" :schedule="activeSchedule" :activeUser="activeUser"/>
+      <ScheduleMain @deleteEvent="deleteEvent" @updateEvent="updateEvent" @addEvent="addEvent" :schedule="activeSchedule" :viewedSchedule="viewedSchedule" :signedInUser="signedInUser"/>
     </div>
   </div>
 </template>
@@ -52,10 +53,28 @@ export default {
 	data(){
 		return {
 			activeSchedule: {},
-			activeUser: "No Active Schedule"
+			activeUser: "No Active Schedule",
+			viewedSchedule: "none",
+			signedInUser: "DaddyLongLegs"
 		}
 	},
 	methods: {
+		updateWidth(event){
+			let tempSelect = document.createElement('select'),
+			tempOption = document.createElement('option');
+
+			tempOption.textContent = event.target.options[event.target.selectedIndex].text;
+			tempSelect.style.cssText += `
+				visibility: hidden;
+				position: fixed;
+				`;
+			tempSelect.appendChild(tempOption);
+			event.target.after(tempSelect);
+			
+			const tempSelectWidth = tempSelect.getBoundingClientRect().width-10;
+			event.target.style.width = `${tempSelectWidth}px`;
+			tempSelect.remove();
+		},
 		loadCalendar: function(event, name){
 			let calendars = document.getElementsByClassName("user-calendar");
 			for(let calendar of calendars){
@@ -76,10 +95,11 @@ export default {
 				this.activeUser = data.schedule.$.user;
 				this.activeUser += "'s Schedule";
 				this.activeSchedule = data;
+				this.viewedSchedule = data.schedule.$.user;
 			});
 		},
 		deleteEvent(event){
-			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user;
+			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user.replace(/ /g,'');
 			let eventId = event;
 			const requestOptions = {
 				method: "DELETE",
@@ -93,11 +113,12 @@ export default {
 				this.activeUser = data.schedule.$.user;
 				this.activeUser += "'s Schedule";
 				this.activeSchedule = data;
+				this.viewedSchedule = data.schedule.$.user;
 				this.popup("Event successfully deleted");
 			});
 		},
 		updateEvent(event){
-			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user;
+			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user.replace(/ /g,'');
 			let request = {
 				"userName": userSchedule,
 				"updatedEvent": event
@@ -114,11 +135,12 @@ export default {
 				this.activeUser = data.schedule.$.user;
 				this.activeUser += "'s Schedule";
 				this.activeSchedule = data;
+				this.viewedSchedule = data.schedule.$.user;
 				this.popup("Event successfully updated");
 			});
 		},
 		addEvent(event){
-			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user;
+			let userSchedule = JSON.parse(JSON.stringify(this.activeSchedule)).schedule.$.user.replace(/ /g,'');
 			let request = {
 				"userName": userSchedule,
 				"event": event
@@ -135,6 +157,7 @@ export default {
 				this.activeUser = data.schedule.$.user;
 				this.activeUser += "'s Schedule";
 				this.activeSchedule = data;
+				this.viewedSchedule = data.schedule.$.user;
 				this.popup("Event successfully added");
 			});
 		},
@@ -182,8 +205,11 @@ export default {
 	padding-bottom: 25px;
 }
 
+#signed-in-as{
+	font-size: 14px;
+}
+
 #sidebar select{
-	width: 80%;
 	padding: 6px;
 	font-size: 16px;
 	border: none;
