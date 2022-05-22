@@ -2,18 +2,18 @@
 	<div class="calendar-month">
 		<div class="calendar-header">
 			<ScheduleMonthSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
-			<ScheduleAddEvent  v-bind:style="Object.keys(schedule).length === 0 ? 'display: none;' : 'display: block;'" @openAdd="addingEvent = true" class="add-event"/>
+			<ScheduleAddEvent v-bind:style="Object.keys(schedule).length === 0 || signedInUser !== viewedSchedule ? 'display: none;' : 'display: block;'" @openAdd="addingEvent = true" class="add-event"/>
 		</div>
 		<ScheduleWeekdays/>
 
 		<ol class="days-grid">
-			<ScheduleDay @selectEvent="updateSelectedEvent" v-for="day in days" :key="day.date" :day="day" :is-today="day.date === today" :schedule="schedule" :selectedEvent="selectedEvent"/>
+			<ScheduleDay @selectEvent="updateSelectedEvent" v-for="day in days" :key="day.date" :day="day" :is-today="day.date === today" :schedule="schedule" :selectedEvent="selectedEvent" :viewedSchedule="viewedSchedule" :signedInUser="signedInUser"/>
 		</ol>
 		<div class="update-container" :class="!(Object.keys(selectedEvent).length === 0) ? 'on-screen' : 'off-screen'">
-			<EditEvent v-if="activeUser != 'No Active Schedule'" @selectEvent="updateSelectedEvent" @updateEvent="updateEvent" @deleteEvent="deleteEvent" :event="selectedEvent"/>
+			<EditEvent @selectEvent="updateSelectedEvent" @updateEvent="updateEvent" @deleteEvent="deleteEvent" :event="selectedEvent" :viewedSchedule="viewedSchedule" :signedInUser="signedInUser"/>
 		</div>
 		<div class="add-container" :class="addingEvent ? 'on-screen' : 'off-screen'">
-			<AddEvent v-if="activeUser != 'No Active Schedule'" @addEvent="addEvent" @closeAdd="addingEvent = false"/>
+			<AddEvent v-if="signedInUser == viewedSchedule" @addEvent="addEvent" @closeAdd="addingEvent = false"/>
 		</div>
 	</div>
 </template>
@@ -67,7 +67,9 @@ export default {
 	},
 	props: {
 		schedule: Object,
-		activeUser: String
+		activeUser: String,
+		signedInUser: String,
+		viewedSchedule: String
 	},
 	computed: {
 		days() {

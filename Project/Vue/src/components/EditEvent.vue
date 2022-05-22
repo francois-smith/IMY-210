@@ -1,22 +1,22 @@
 <template>
     <div v-if="!(Object.keys(event).length === 0)" id="event-container">
         <div id="view-header">
-            <input v-model="title">
+            <input :disabled="!editable" v-model="title">
             <img @click="closeView" src="../media/close.svg">
         </div>
         <div id="view-body">
             <span id="view-type-title">Event Type: </span>
             <div id="view-type">
-                <label><input type="radio" name="eventType" value="Event" v-on:change="updateType('Event')" :checked="type == 'Event'"> Event</label>
-                <label><input type="radio" name="eventType" value="Task" v-on:change="updateType('Task')" :checked="type == 'Task'"> Task</label>
-                <label><input type="radio" name="eventType" value="Appointment" v-on:change="updateType('Appointment')" :checked="type == 'Appointment'"> Appointment</label>
+                <label><input :disabled="!editable" type="radio" name="eventType" value="Event" v-on:change="updateType('Event')" :checked="type == 'Event'"> Event</label>
+                <label><input :disabled="!editable" type="radio" name="eventType" value="Task" v-on:change="updateType('Task')" :checked="type == 'Task'"> Task</label>
+                <label><input :disabled="!editable" type="radio" name="eventType" value="Appointment" v-on:change="updateType('Appointment')" :checked="type == 'Appointment'"> Appointment</label>
             </div>
 
             <div id="view-date">
-                <MonthPicker @change="changeMonth" :show-year="false" :default-month="getMonth"/>
+                <MonthPicker @change="changeMonth" v-bind:style="signedInUser !== viewedSchedule ? 'pointer-events: none;' : 'pointer-events: auto;'" :show-year="false" :default-month="getMonth"/>
                 <div id="view-date-time">
                     <label>
-                        Day: <input id="date-number" v-model="day" type="number" min="1" :max='getMaxDays'>
+                        Day: <input :disabled="!editable" id="date-number" v-model="day" type="number" min="1" :max='getMaxDays'>
                     </label>
                     <label>From:&nbsp;
                         <date-picker v-model:value="getStartTime"
@@ -24,48 +24,48 @@
                             start: '06:00',
                             step: '00:30',
                             end: '22:00',
-                        }" format="hh:mm a" v-on:change="startingChange" type="time" placeholder="hh:mm a"/>
+                        }" format="hh:mm a" v-on:change="startingChange" :disabled="!editable" type="time" placeholder="hh:mm a"/>
                     </label>
                     <label>To:&nbsp;
-                        <date-picker v-model:value="getEndTime"
+                        <date-picker v-model:value="getEndTime" 
                         :time-picker-options="{
                             start: '06:00',
                             step: '00:30',
                             end: '22:00',
-                        }" format="hh:mm a" v-on:change="endingChange" type="time" placeholder="hh:mm a"></date-picker>
+                        }" format="hh:mm a" v-on:change="endingChange" type="time" :disabled="!editable" placeholder="hh:mm a"></date-picker>
                     </label>
                 </div>
             </div>
 
             <span id="view-repeat-title">Repeat: </span>
             <div id="view-repeat">
-                <label><input type="checkbox" class="repeatOption" @change="check($event)" value="Daily" :checked="repeatType == 'Daily'"> Daily</label>
-                <label><input type="checkbox" class="repeatOption" @change="check($event)" value="Weekly" :checked="repeatType == 'Weekly'"> Weekly</label>
-                <label><input type="checkbox" class="repeatOption" @change="check($event)" value="Monthly" :checked="repeatType == 'Monthly'"> Monthly</label>
+                <label><input :disabled="!editable" type="checkbox" class="repeatOption" @change="check($event)" value="Daily" :checked="repeatType == 'Daily'"> Daily</label>
+                <label><input :disabled="!editable" type="checkbox" class="repeatOption" @change="check($event)" value="Weekly" :checked="repeatType == 'Weekly'"> Weekly</label>
+                <label><input :disabled="!editable" type="checkbox" class="repeatOption" @change="check($event)" value="Monthly" :checked="repeatType == 'Monthly'"> Monthly</label>
             </div>
 
             <span id="view-venue-title">Venue: </span>
             <div id="view-venue">
-                <input type="text" v-model="venue"/>
+                <input type="text" :disabled="!editable" v-model="venue"/>
             </div>
 
             <span id="view-description-title">Description: </span>
             <div id="view-description">
-                <textarea v-model="description"></textarea>
+                <textarea :disabled="!editable" v-model="description"></textarea>
             </div>
 
             <div id="view-guests">
                 <hr/>
                 <h3>Guest List</h3>
                 <div class="view-guest" v-for="(guest, index) in guestlist" :key="index">
-                    <input type="text" placeholder="example@email.com" v-model="guestlist[index].name">
-                    <input type="text" placeholder="name" class="email-input" v-model="guestlist[index].email">
-                    <img @click="removeGuest(index)" src="../media/remove.svg">
+                    <input :disabled="!editable" type="text" placeholder="example@email.com" v-model="guestlist[index].name">
+                    <input :disabled="!editable" type="text" placeholder="Name" class="email-input" v-model="guestlist[index].email">
+                    <img v-if="editable" @click="removeGuest(index)" src="../media/remove.svg">
                 </div>
-                <button id="addGuest" @click="addGuest()" v-bind:style="guestlist.length >= 10 ? 'display: none;' : 'display: flex;'"><img src="../media/add.svg"><span>Add Guest</span></button>
+                <button id="addGuest" @click="addGuest()" v-bind:style="guestlist.length >= 10 || signedInUser !== viewedSchedule ? 'display: none;' : 'display: flex;'"><img src="../media/add.svg"><span>Add Guest</span></button>
             </div>
         </div>
-        <div id="view-buttons">
+        <div v-bind:style="signedInUser !== viewedSchedule ? 'display: none;' : 'display: flex;'" id="view-buttons">
             <button @click="deleteEvent" id="view-button-delete"><img src="../media/delete.svg"><span class="view-button-title">Delete Event</span></button>
             <button @click="saveEvent" id="view-button-save"><img src="../media/save.svg"><span class="view-button-title">Save Changes</span></button>
         </div>
@@ -89,7 +89,9 @@ export default {
         DatePicker
     },
     props: {
-        event: Object
+        event: Object,
+		signedInUser: String,
+		viewedSchedule: String
     },
     setup() {
       const toast = useToast();
@@ -98,6 +100,7 @@ export default {
     data() {
         return {
             title: "",
+            editable: false,
             eventType: "",
             startTime: "",
             endTime: "",
@@ -111,6 +114,13 @@ export default {
     },
     watch: { 
         event: function() {
+            if(this.signedInUser == this.viewedSchedule){
+                this.editable = true;
+            }
+            else{
+                this.editable = false;
+            }
+            
             if(Object.keys(this.event).length != 0){
                 this.day = JSON.parse(JSON.stringify(this.event)).date[0].day.toString();
                 this.month = JSON.parse(JSON.stringify(this.event)).date[0].month.toString();

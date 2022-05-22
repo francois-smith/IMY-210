@@ -82,7 +82,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 let days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 export default {
-	name: 'EventView',
+	name: 'EventAdd',
     components: {
         MonthPicker,
         DatePicker

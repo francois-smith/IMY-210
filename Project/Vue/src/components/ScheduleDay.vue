@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 export default {
-	name: "CalendarMonthDayItem",
+	name: "SheduleDay",
 	props: {
 		day: {
 			type: Object,
