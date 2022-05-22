@@ -40,6 +40,23 @@ var router = (app, fs) => {
                 res.send(result);
             });           
         });
+    });
+
+    app.get('/RSS', (req, res) => {
+        //Attempt to read rss feed
+        fs.readFile("./RSS/feed.rss", 'utf8', (err, data) => {
+            if(err){
+                if(err.errno == -4058){
+                    res.send("Failed to read RSS feed");
+                    return;
+                }
+                return;
+            }
+            
+            parser.parseString(data, function (err, result) {
+                res.send(result);
+            });           
+        });
 
     });
 
@@ -159,7 +176,7 @@ var router = (app, fs) => {
 
                 jsonFile.schedule["event"] = [newEvent];
             }
-            
+            addToRSS(newEvent, user, "added");
             
             var xml = builder.buildObject(jsonFile);
             fs.writeFile(data_file, xml, (err, data) => {
@@ -175,7 +192,7 @@ var router = (app, fs) => {
             });
 
             res.json(jsonFile); 
-         });
+        });
     });
 
     /**
@@ -242,6 +259,7 @@ var router = (app, fs) => {
 
                     let newEvent = createEvent(eventDetails);
                     json.schedule.event[index] = newEvent;
+                    addToRSS(newEvent, user, "updated");
 
                     var xml = builder.buildObject(json);
                     fs.writeFile(data_file, xml, (err, data) => {
@@ -318,6 +336,8 @@ var router = (app, fs) => {
                         json.schedule.event.push({});
                     }
 
+                    addToRSS(event, user, "removed");
+
                     var xml = builder.buildObject(json);
                     fs.writeFile(data_file, xml, (err, data) => {
                         if(err){
@@ -349,7 +369,7 @@ var router = (app, fs) => {
      * Event is structured on client side before being posted, thus it asumed events are correct.
      * These are basic checks of only the necessities.
      */
-     function validateEvent(event, schedule, put = false){
+    function validateEvent(event, schedule, put = false){
         //First check if ID is specified, it asumed that id is generated and valid on client side.
         if(event.id == undefined){
             return "ID not set";
@@ -459,6 +479,51 @@ var router = (app, fs) => {
     
         //If all checks pass then it is assumed that event is correct
         return "success";
+    }
+
+    /**
+     * Function to add a new event to the rss feed.
+     * Takes in a @param event => event that was altered
+     * Takes in a @param user => User who Initiated the change
+     * Takes in a @param status => what action was performed on the event
+     */
+    function addToRSS(event, user, status){
+        //Attempt to read file with specified username.
+        fs.readFile("./RSS/feed.rss", 'utf8', (err, data) => {
+            if(err){
+                //If file does not exist, then invalid user was specified
+                if(err.errno == -4058){
+                    console.log("Could Not Read RSS");
+                    return;
+                }
+                return;
+            }
+
+            let jsonFile;
+            parser.parseString(data, function (err, result) {
+                jsonFile = result;
+            }); 
+
+            event.$["status"] = status;
+            event.$["user"] = user;
+            if(jsonFile.feed.event.length == 5){
+                jsonFile.feed.event.pop();
+                jsonFile.feed.event.unshift(event);
+            }
+            else{
+                jsonFile.feed.event.unshift(event);
+            }
+            
+            var xml = builder.buildObject(jsonFile);
+            fs.writeFile("./RSS/feed.rss", xml, (err, data) => {
+                if(err){
+                    //If file does not exist, then invalid user was specified
+                    if(err.errno == -4058){
+                        console.log("Could Not Read RSS");
+                    }
+                }
+            });
+        });
     }
     
     /*
