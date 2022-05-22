@@ -1,8 +1,8 @@
 <template>
 	<li id="event_attachment" class="calendar-day" :class="{'prev-month': !day.isCurrentMonth, 'calendar-today': isToday}">
 		<div class="events-container" v-if="!(Object.keys(schedule).length === 0) && schedule.schedule.event.length != 0">
-			<template v-for="event in schedule.schedule.event" :key="event">
-				<div v-on:click="selectEvent(event.$.id.toString())" class="event" v-if="event.date && event.date[0].day.toString() == getDay && event.date[0].month.toString() == getMonth">
+			<template v-for="event in getSchedule">
+				<div v-on:click="selectEvent(event.$.id.toString())" :key="event" class="event" v-if="event.date && event.date[0].day.toString() == getDay && event.date[0].month.toString() == getMonth">
 					<span>{{event.title.toString()}}</span>
 				</div>
 			</template>
@@ -35,13 +35,6 @@ export default {
 		schedule: Object,
 		selectedEvent: Object,
 	},
-	watch: {
-		schedule() {
-			for(let event of document.querySelectorAll(".event")){
-				event.style.backgroundColor = this.randomColor();
-			}
-		}
-	},
 	computed: {
 		label() {
 			return dayjs(this.day.date).format("D");
@@ -52,6 +45,12 @@ export default {
 		getMonth() {
 			return months[dayjs(this.day.date).format("M")-1];
 		},
+		getSchedule() {
+			for(let event of document.querySelectorAll(".event")){
+				event.style.backgroundColor = this.randomColor();
+			}
+			return this.schedule.schedule.event;
+		}
 	},
 	methods: {
 		selectEvent: function(event){
