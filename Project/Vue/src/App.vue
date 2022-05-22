@@ -12,7 +12,7 @@
 				<option>Jeff</option>
 			</select>
 		</div>
-		<h2>Schedules</h2>
+		<h2 id="schedules-title">Schedules</h2>
 		<div class="user-calendar" v-on:click="loadCalendar($event, 'DaddyLongLegs')">
 			DaddyLongLegs
 		</div>
@@ -31,7 +31,7 @@
 		<div id="rss-feed">
 			<h2 id="rss-feed-title">RSS Feed</h2>
 			<hr/>
-			
+
 			<div class="feed-item" v-for="item in feed.event" :key="item">
 				<div class="feed-item-details">
 					<span class="feed-user">{{item.$.user.replace(/([A-Z])/g, ' $1').trim()}}</span>
@@ -257,12 +257,17 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	width: 80%;
-	border-bottom: 1px solid #e4e4e49d !important;
 	padding-bottom: 50px;
 }
 
-#user-container:nth-child(2){
-	border-top: 1px solid #e4e4e49d !important;
+#schedules-title{
+	color: #555;
+	font-size: 24px;
+	font-weight: 500;
+	text-align: center;
+	padding-bottom: 14px;
+	border-bottom: 1px solid #e4e4e49d !important;
+	width: 80%;
 }
 
 .user-calendar{
@@ -317,6 +322,15 @@ export default {
 	justify-content: space-between;
 	padding: 6px;
 	margin-bottom: 12px;
+	transition: all 0.3s;
+}
+
+.feed-item *{
+	cursor: default;
+}
+
+.feed-item:hover{
+	transform: translateX(10px);
 }
 
 .feed-user{
