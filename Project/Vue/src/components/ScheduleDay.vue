@@ -55,7 +55,7 @@ export default {
 	},
 	methods: {
 		selectEvent: function(event){
-			let schedule = JSON.parse(JSON.stringify(this.schedule)).schedule.$.user;
+			let schedule = JSON.parse(JSON.stringify(this.schedule)).schedule.$.user.replace(/ /g,'');
 			fetch("http://localhost:3000/event/"+schedule+"/"+event)
 			.then(async response => {
 				let data;
