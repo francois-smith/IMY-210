@@ -12,6 +12,7 @@
 				<option>Jeff</option>
 			</select>
 		</div>
+		<h2>Schedules</h2>
 		<div class="user-calendar" v-on:click="loadCalendar($event, 'DaddyLongLegs')">
 			DaddyLongLegs
 		</div>
@@ -27,7 +28,9 @@
 		<div class="user-calendar" v-on:click="loadCalendar($event, 'Jeff')">
 			Jeff
 		</div>
-		<div id="RSS Feed"></div>
+		<div id="RSS Feed">
+
+		</div>
     </div>
     <div id="schedule-container">
 		<div id="schedule-header">
