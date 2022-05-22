@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <feed>
-  <event id="Hdwwsh62M" status="removed" user="DaddyLongLegs">
-    <title>Hdwaddawdawd</title>
-    <type>Task</type>
+  <event id="Tesm9jj2M" status="updated" user="YeetSkadeet">
+    <title>Test Event</title>
+    <type>Appointment</type>
     <date repeat="Weekly">
-      <day>2</day>
-      <month>May</month>
-    </date>
-  </event>
-  <event id="dawxasf2M" status="updated" user="DaddyLongLegs">
-    <title>dawdawdwadaw</title>
-    <type>Event</type>
-    <date>
       <day>22</day>
       <month>May</month>
     </date>
+    <guests>
+      <guest>
+        <name/>
+        <email>Keelan</email>
+      </guest>
+    </guests>
   </event>
-  <event id="dawqhj31M" status="removed" user="DaddyLongLegs">
-    <title>dawdwadw</title>
-    <type>Event</type>
-    <date>
-      <day>14</day>
-      <month>May</month>
-    </date>
-  </event>
-  <event id="dwasuag1M" status="removed" user="DaddyLongLegs">
+  <event id="dwa8fw41M" status="removed" user="MichaelJordan">
     <title>dwadwad</title>
     <type>Event</type>
     <date>
@@ -32,11 +22,27 @@
       <month>May</month>
     </date>
   </event>
-  <event id="dawqhj31M" status="updated" user="DaddyLongLegs">
-    <title>dawdwadw</title>
+  <event id="dwa3exc1J" status="added" user="DaddyLongLegs">
+    <title>dwadawdaw</title>
     <type>Event</type>
     <date>
-      <day>14</day>
+      <day>1</day>
+      <month>January</month>
+    </date>
+  </event>
+  <event id="dwa01j32M" status="updated" user="DaddyLongLegs">
+    <title>dwadwadwa</title>
+    <type>Event</type>
+    <date>
+      <day>2</day>
+      <month>May</month>
+    </date>
+  </event>
+  <event id="dwaensg2M" status="removed" user="DaddyLongLegs">
+    <title>dwadwadaw</title>
+    <type>Event</type>
+    <date>
+      <day>2</day>
       <month>May</month>
     </date>
   </event>

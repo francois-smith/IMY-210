@@ -1,41 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <schedule user="DaddyLongLegs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../validation/validate.xsd">
-  <event id="IMYp3u82M">
-    <title>IMY 210 Sucks</title>
-    <type>Appointment</type>
-    <date repeat="Monthly">
-      <day>22</day>
+  <event id="dwa1hwq2J">
+    <title>dwadwadaw</title>
+    <type>Event</type>
+    <date>
+      <day>2</day>
       <month>January</month>
-      <startingTime>07:30 AM</startingTime>
-      <endingTime>10:30 AM</endingTime>
-    </date>
-    <guests>
-      <guest>
-        <name/>
-        <email>Keelan</email>
-      </guest>
-      <guest>
-        <name/>
-        <email>Ross</email>
-      </guest>
-    </guests>
-    <venue>IT Lounge</venue>
-    <description>Yedet</description>
-  </event>
-  <event id="csdie8g2F">
-    <title>csdcd</title>
-    <type>Event</type>
-    <date>
-      <day>22</day>
-      <month>February</month>
     </date>
   </event>
-  <event id="dawxasf2M">
-    <title>dawdawdwadaw</title>
+  <event id="dwax3902M">
+    <title>dwadawd</title>
     <type>Event</type>
     <date>
-      <day>22</day>
+      <day>2</day>
       <month>May</month>
+    </date>
+  </event>
+  <event id="dwa01j32M">
+    <title>dwadwadwa</title>
+    <type>Event</type>
+    <date>
+      <day>2</day>
+      <month>May</month>
+    </date>
+  </event>
+  <event id="dwa3exc1J">
+    <title>dwadawdaw</title>
+    <type>Event</type>
+    <date>
+      <day>1</day>
+      <month>January</month>
     </date>
   </event>
 </schedule>

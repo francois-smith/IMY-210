@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <schedule user="Michael Jordan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../validation/validate.xsd">
-  <event id="dwa8fw41M">
-    <title>dwadwad</title>
-    <type>Event</type>
-    <date>
-      <day>12</day>
-      <month>May</month>
-    </date>
-  </event>
+  <event/>
 </schedule>
