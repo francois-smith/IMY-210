@@ -1,50 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <schedule user="DaddyLongLegs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../validation/validate.xsd">
-  <event id="wdaqsqk3M">
-    <title>wdadawdawd</title>
-    <type>Event</type>
-    <date>
-      <day>3</day>
-      <month>May</month>
+  <event id="IMYp3u82M">
+    <title>IMY 210 Sucks</title>
+    <type>Appointment</type>
+    <date repeat="Monthly">
+      <day>22</day>
+      <month>January</month>
+      <startingTime>07:30 AM</startingTime>
+      <endingTime>10:30 AM</endingTime>
     </date>
+    <guests>
+      <guest>
+        <name/>
+        <email>Keelan</email>
+      </guest>
+      <guest>
+        <name/>
+        <email>Ross</email>
+      </guest>
+    </guests>
+    <venue>IT Lounge</venue>
+    <description>Yedet</description>
   </event>
-  <event id="Tes6ywe8M">
-    <title>Test Task</title>
-    <type>Event</type>
-    <date>
-      <day>8</day>
-      <month>May</month>
-    </date>
-  </event>
-  <event id="Ayo9r9b2M">
-    <title>Ayoooo</title>
+  <event id="csdie8g2F">
+    <title>csdcd</title>
     <type>Event</type>
     <date>
       <day>22</day>
-      <month>May</month>
+      <month>February</month>
     </date>
   </event>
-  <event id="Thi4j2z2M">
-    <title>This Is Epic</title>
-    <type>Event</type>
-    <date>
-      <day>26</day>
-      <month>May</month>
-    </date>
-  </event>
-  <event id="Leezijd1M">
-    <title>Le First Day</title>
-    <type>Event</type>
+  <event id="Hdwwsh62M">
+    <title>Hdwaddawdawd</title>
+    <type>Task</type>
     <date repeat="Weekly">
-      <day>1</day>
-      <month>May</month>
-    </date>
-  </event>
-  <event id="Lesnmw82M">
-    <title>Le Today</title>
-    <type>Event</type>
-    <date>
-      <day>21</day>
+      <day>2</day>
       <month>May</month>
     </date>
   </event>

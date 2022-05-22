@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schedule user="Jeff" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../validation/validate.xsd">
+  <event id="dwap5wt1M">
+    <title>dwadawdaw</title>
+    <type>Event</type>
+    <date>
+      <day>1</day>
+      <month>May</month>
+    </date>
+  </event>
+</schedule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schedule user="Yeet Skadeet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../validation/validate.xsd">
+  <event id="Tesm9jj2M">
+    <title>Test Event</title>
+    <type>Appointment</type>
+    <date repeat="Weekly">
+      <day>22</day>
+      <month>May</month>
+    </date>
+    <guests>
+      <guest>
+        <name/>
+        <email>Keelan</email>
+      </guest>
+    </guests>
+  </event>
+</schedule>
