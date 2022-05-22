@@ -31,6 +31,7 @@
 		<div id="rss-feed">
 			<h2 id="rss-feed-title">RSS Feed</h2>
 			<hr/>
+			
 			<div class="feed-item" v-for="item in feed.event" :key="item">
 				<div class="feed-item-details">
 					<span class="feed-user">{{item.$.user.replace(/([A-Z])/g, ' $1').trim()}}</span>
