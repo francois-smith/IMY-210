@@ -47,7 +47,7 @@ var router = (app, fs) => {
      * Request to retrieve a n event from specific schedule.
      * Takes in a username paramater as well as eventID.
      */
-     app.get('/event/:userName/:eventId', (req, res) => {
+    app.get('/event/:userName/:eventId', (req, res) => {
         //If no username is passed in the return error message
         if(req.params["userName"] == null){
             res.send("No User Specified");
@@ -97,90 +97,6 @@ var router = (app, fs) => {
             res.json("Event Not Found In Schedule"); 
         });
     });
-
-    /*
-        Most Basic POST request
-        {
-            "userName": "DaddyLongLegs",
-            "event": {
-                "id": "IMY210103",
-                "title": "Yeet",
-                "type": "Task",
-                "date": {
-                    "day": 4,
-                    "month": "January",
-                },
-                "guests":[
-                    
-                ]
-            } 
-        }
-
-        Most advanced POST request
-        {
-            "userName": "DaddyLongLegs",
-            "event": {
-                "id": "IMY210104",
-                "title": "Yeet",
-                "type": "Task",
-                "date": {
-                    "repeat": "Daily",
-                    "day": 4,
-                    "month": "January",
-                    "startingTime": "03:30 PM" ,
-                    "endingTime": "04:30 PM"
-                },
-                "guests":[
-                    {
-                        "guest":[
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            },
-                            {
-                                "name": ["yeet"],
-                                "email": ["yeet"]
-                            }
-                        ]
-                    }
-                ],
-                "venue": "IT Lounge",
-                "description": "World worst brain surgeon giving class on XML."
-            } 
-        }
-    */
 
     /**
      * Request to POST an event to schedule.
@@ -233,7 +149,6 @@ var router = (app, fs) => {
             }); 
 
             let newEvent = createEvent(req.body.event);
-            console.log(jsonFile.schedule.event);
             if(jsonFile.schedule.event[0].$ != undefined){
                 jsonFile.schedule.event.push(newEvent);
             }
@@ -600,113 +515,6 @@ var router = (app, fs) => {
 
         return returnObject;
     }
-
-    // app.post('/data', (req, res) => {
-    //     if (Object.keys(req.body).length === 0) {
-    //         res.send("No Item Specified");
-    //     }
-
-    //     data_file = 'data.json';
-
-    //     fs.readFile(data_file, (err, data) => {
-    //         if(err){
-    //             throw err;
-    //         }
-
-    //         let parsedData = JSON.parse(data);
-    //         let index = Object.keys(parsedData).length;
-    //         let newItem = req.body;
-
-    //         parsedData[index] = newItem;
-    //         parsedData = JSON.stringify(parsedData);
-    //         fs.writeFile(data_file, parsedData, (err, data) => {
-    //             if(err){
-    //                 throw err;
-    //             }
-    //         });
-
-    //         res.send(parsedData);
-    //     });
-    // });
-
-    // app.put('/data/:id', (req, res) => {
-    //     if(req.params["id"] == null){
-    //         res.send("No ID specified");
-    //     }
-
-    //     if (Object.keys(req.body).length === 0) {
-    //         res.send("No Information Specified");
-    //     }
-
-    //     let idParam = req.params["id"];
-    //     let newInfo = req.body;
-    //     data_file = 'data.json';
-
-    //     fs.readFile(data_file, (err, data) => {
-    //         if(err){
-    //             throw err;
-    //         }
-
-    //         let parsedData = JSON.parse(data);
-            
-    //         let i = 0;
-    //         for(let item of parsedData){
-    //             if(item.id == idParam){
-    //                 parsedData[i] = newInfo;
-
-    //                 parsedData = JSON.stringify(parsedData);
-    //                 fs.writeFile(data_file, parsedData, (err, data) => {
-    //                     if(err){
-    //                         throw err;
-    //                     }
-    //                 });
-        
-    //                 res.send(parsedData);
-    //                 return;
-    //             }
-    //             i++;
-    //         }
-
-    //         res.send("Item with ID could not be found");
-    //     });
-    // });
-
-    // app.delete('/data/:id', (req, res) => {
-    //     if(req.params["id"] == null){
-    //         res.send("No ID specified");
-    //     }
-
-    //     let idParam = req.params["id"];
-    //     data_file = 'data.json';
-
-    //     fs.readFile(data_file, (err, data) => {
-    //         if(err){
-    //             throw err;
-    //         }
-
-    //         let parsedData = JSON.parse(data);
-            
-    //         let i = 0;
-    //         for(let item of parsedData){
-    //             if(item.id == idParam){
-    //                 parsedData.splice(i, 1)
-
-    //                 parsedData = JSON.stringify(parsedData);
-    //                 fs.writeFile(data_file, parsedData, (err, data) => {
-    //                     if(err){
-    //                         throw err;
-    //                     }
-    //                 });
-        
-    //                 res.send(parsedData);
-    //                 return;
-    //             }
-    //             i++;
-    //         }
-
-    //         res.send("Item with ID could not be found");
-    //     });
-    // });
 }
 
 module.exports = router;
