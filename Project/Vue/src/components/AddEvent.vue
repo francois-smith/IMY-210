@@ -19,7 +19,7 @@
                         Day: <input id="date-number" v-model="day" type="number" min="1" :max='getMaxDays'>
                     </label>
                     <label>From:&nbsp;
-                        <date-picker v-model:value="getStartTime"
+                        <date-picker :value="getStartTime"
                         :time-picker-options="{
                             start: '06:00',
                             step: '00:30',
@@ -27,7 +27,7 @@
                         }" format="hh:mm a" v-on:change="startingChange" type="time" placeholder="hh:mm a"/>
                     </label>
                     <label>To:&nbsp;
-                        <date-picker v-model:value="getEndTime"
+                        <date-picker :value="getEndTime"
                         :time-picker-options="{
                             start: '06:00',
                             step: '00:30',
