@@ -27,6 +27,7 @@
 		<div class="user-calendar" v-on:click="loadCalendar($event, 'Jeff')">
 			Jeff
 		</div>
+		<div id="RSS Feed"></div>
     </div>
     <div id="schedule-container">
 		<div id="schedule-header">
@@ -50,12 +51,16 @@ export default {
       const toast = useToast();
       return { toast }
     },
+	mounted() {
+		this.updateRSS();
+	},
 	data(){
 		return {
 			activeSchedule: {},
 			activeUser: "No Active Schedule",
 			viewedSchedule: "none",
-			signedInUser: "DaddyLongLegs"
+			signedInUser: "DaddyLongLegs",
+			feed: {}
 		}
 	},
 	methods: {
@@ -159,6 +164,14 @@ export default {
 				this.activeSchedule = data;
 				this.viewedSchedule = data.schedule.$.user;
 				this.popup("Event successfully added");
+			});
+		},
+		updateRSS(){
+			fetch("http://localhost:3000/RSS")
+			.then(async response => {
+				let data = await response.json();
+				this.feed = data;
+				console.log(JSON.parse(JSON.stringify(this.feed)));
 			});
 		},
         popup(message){
